@@ -1,0 +1,20 @@
+html {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: black;
+	background-color: white;
+	font-size: 16px;
+}
+body {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+header {
+	background-color: #008AE6;
+	height: 60px;
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+	color: white;
+	font-size: 24px;
+}
