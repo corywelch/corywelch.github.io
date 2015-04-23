@@ -2,21 +2,23 @@
 <html xmlns="http://www.w3.org/1999/html">
 	<head>
 		<title>Cory Welch's Website</title>
-		<link rel="stylesheet" type="text/css" href="css/loader.css">
 		<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<script src="js/main.js"></script>
 	</head>
 	<body>
-
-		<div>
-			<div id="loaderContainer" class="content">
-				<div id="spinner">
-					<img src="img/WebsiteSpinnerTest.png" height="100px" width="100px">
-				</div>
-			</div>
+		<div id="NavSection" class="section">
+			<div class="titleContainer"><div class="title">Cory Welch's Website</div></div>
+				<ul class="navContainer">
+					<li class="navItem"><div class="nav section1" onmouseover="navMouseOver(1)">1</div></li>
+					<li class="navItem"><div class="nav section2" onmouseover="navMouseOver(2)">2</div></li>
+					<li class="navItem"><div class="nav section3" onmouseover="navMouseOver(3)">3</div></li>
+					<li class="navItem"><div class="nav section4" onmouseover="navMouseOver(4)">4</div></li>
+				</ul>
 		</div>
-
-		<div id="thisIsAnID" class="fixedBar">0% of the way through the page.</div>
-		<script type="text/javascript" src="js/customScrolling.js"></script>
+		<div id="section1" class="section section1 hidden">1</div>
+		<div id="section2" class="section section2 hidden">2</div>
+		<div id="section3" class="section section3 hidden">3</div>
+		<div id="section4" class="section section4 hidden">4</div>
 	</body>
 </html>

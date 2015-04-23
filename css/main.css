@@ -3,8 +3,8 @@ html {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	color: black;
-	background-color: white;
+	color: #000000;
+	background-color: #555555;
 	font-size: 16px;
 	border: 0;
 }
@@ -12,17 +12,90 @@ body {
 	margin: 0 0 0 0;
 	padding: 0 0 0 0;
 	border: 0;
-	background-color: #499BDE;
-	/*background-color: #DEA749;
-	background-color: #6DB571;
-	background-color: #B28BD9;*/
-	height: 200vh;
+}
+div {
+	margin: 0;
+	padding: 0;
 }
 
-.fixedBar {
-	position: fixed;
-	z-index: 1000;
+.hidden {
+	display: none;
 }
+
+#NavSection {
+	background-color: #000000;
+	color: #F5F5F5;
+}
+
+.section {
+	height: 100vh;
+	min-height: 600px;
+	max-height: 850px;
+	width: 100vw;
+	min-width: 700px;
+	max-width: 1500px;
+}
+
+.titleContainer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+	height: 10%;
+}
+
+.title {
+	text-align: center;
+	font-size: 24px;
+	padding-top: 20px;
+}
+
+.navContainer {
+	width: 100%;
+	height: 90%;
+	margin-bottom: 0;
+	background-color: #555555;
+	font-size: 0;
+	padding: 0;
+}
+
+.navItem {
+	font-size: 16px;
+	position: relative;
+	margin-bottom: 0;
+	display: inline-block;
+	width: 25%;
+	height:100%;
+}
+
+.nav {
+	position: absolute;
+	bottom: 0;
+	left: 5%;
+	width: 90%;
+	height: 97.5%;
+}
+
+.section1 {
+	background-color: #DEA749;
+	color: #FFFFFF;
+}
+
+.section2 {
+	background-color: #6DB571;
+	color: #FFFFFF;
+}
+
+.section3 {
+	background-color: #B28BD9;
+	color: #FFFFFF;
+}
+
+.section4 {
+	background-color: #87CEFA;
+	color: #222222;
+}
+
+
 
 /*
 Android: -webkit-
