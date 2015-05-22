@@ -20,7 +20,7 @@
 				</li>
 				<li class="content navItem">
 					<div id="navsection2" class="nav section2unselected" onmouseover="navMouseOver(2)" onclick="navClicked(2)">
-						<p></p>
+						<p>Blog</p>
 					</div>
 				</li>
 				<li class="content navItem">
@@ -35,9 +35,9 @@
 				</li>
 			</ul>
 		</div>
-		<div id="section1" class="section section1 hidden">1</div>
-		<div id="section2" class="section section2 hidden">2</div>
-		<div id="section3" class="section section3 hidden">3</div>
+		<div id="section1" class="section section1 hidden">About Me</div>
+		<div id="section2" class="section section2 hidden">Blog</div>
+		<div id="section3" class="section section3 hidden">My Projects</div>
 		<div id="section4" class="section section4 hidden">
 			<div class="container">
 				<div class="content loginContent">
@@ -46,14 +46,14 @@
 						<table>
 							<tr>
 								<td>Username: </td>
-								<td><input type="text" name="username"></td>
+								<td><input type="text" id="username"></td>
 							</tr>
 							<tr>
 								<td>Password: </td>
-								<td><input type="password" name="password" ></td>
+								<td><input type="password" id="password" ></td>
 							</tr>
 							<tr>
-								<td><input type="button" value="Login"></td>
+								<td><input type="button" value="Login" onclick="login()"></td>
 								<td></td>
 							</tr>
 						</table>
