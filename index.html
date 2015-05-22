@@ -4,21 +4,62 @@
 		<title>Cory Welch's Website</title>
 		<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
+		<link rel="stylesheet" type="text/css" href="css/section4.css">
 		<script src="js/main.js"></script>
 	</head>
 	<body>
 		<div id="NavSection" class="section">
-			<div class="titleContainer"><div class="title">Cory Welch's Website</div></div>
-				<ul class="navContainer">
-					<li class="navItem"><div class="nav section1" onmouseover="navMouseOver(1)">1</div></li>
-					<li class="navItem"><div class="nav section2" onmouseover="navMouseOver(2)">2</div></li>
-					<li class="navItem"><div class="nav section3" onmouseover="navMouseOver(3)">3</div></li>
-					<li class="navItem"><div class="nav section4" onmouseover="navMouseOver(4)">4</div></li>
-				</ul>
+			<div class="titleContainer">
+				<div class="title">Cory Welch's Website</div>
+			</div>
+			<ul class="container navContainer">
+				<li class="content navItem">
+					<div id="navsection1" class="nav section1unselected" onmouseover="navMouseOver(1)" onclick="navClicked(1)">
+						<p>About Me</p>
+					</div>
+				</li>
+				<li class="content navItem">
+					<div id="navsection2" class="nav section2unselected" onmouseover="navMouseOver(2)" onclick="navClicked(2)">
+						<p></p>
+					</div>
+				</li>
+				<li class="content navItem">
+					<div id="navsection3" class="nav section3unselected" onmouseover="navMouseOver(3)" onclick="navClicked(3)">
+						<p>My Projects</p>
+					</div>
+				</li>
+				<li class="content navItem">
+					<div id="navsection4" class="nav section4unselected" onmouseover="navMouseOver(4)" onclick="navClicked(4)">
+						<p>Workout Tracking</p>
+					</div>
+				</li>
+			</ul>
 		</div>
 		<div id="section1" class="section section1 hidden">1</div>
 		<div id="section2" class="section section2 hidden">2</div>
 		<div id="section3" class="section section3 hidden">3</div>
-		<div id="section4" class="section section4 hidden">4</div>
+		<div id="section4" class="section section4 hidden">
+			<div class="container">
+				<div class="content loginContent">
+					<div class="login">
+						<h2>Login</h2>
+						<table>
+							<tr>
+								<td>Username: </td>
+								<td><input type="text" name="username"></td>
+							</tr>
+							<tr>
+								<td>Password: </td>
+								<td><input type="password" name="password" ></td>
+							</tr>
+							<tr>
+								<td><input type="button" value="Login"></td>
+								<td></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 </html>

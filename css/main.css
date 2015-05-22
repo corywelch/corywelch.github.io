@@ -52,15 +52,11 @@ div {
 .navContainer {
 	width: 100%;
 	height: 90%;
-	margin-bottom: 0;
 	background-color: #555555;
-	font-size: 0;
-	padding: 0;
 }
 
 .navItem {
 	font-size: 16px;
-	position: relative;
 	margin-bottom: 0;
 	display: inline-block;
 	width: 25%;
@@ -93,6 +89,34 @@ div {
 .section4 {
 	background-color: #87CEFA;
 	color: #222222;
+}
+
+.section1unselected {
+	background-color: #C89642;
+	color: #FFFFFF;
+}
+.section2unselected {
+	background-color: #62A366;
+	color: #FFFFFF;
+}
+.section3unselected {
+	background-color: #A07DC3;
+	color: #FFFFFF;
+}
+.section4unselected {
+	background-color: #7AB9E1;
+	color: #222222;
+}
+
+.container {
+	font-size: 0;
+	padding: 0;
+	margin-bottom: 0;
+}
+
+.content {
+	font-size: 16px;
+	position: relative;
 }
 
 
