@@ -1,5 +1,5 @@
 function getServerURL() {
-	//return "localhost:7676";
+	//return "localhost:80";
 	return "173.33.147.9:7676"
 }
 
