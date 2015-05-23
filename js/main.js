@@ -1,6 +1,25 @@
+
+function getConfig(item){
+
+}
+
 function getServerURL() {
-	//return "localhost:80";
-	return "173.33.147.9:7676"
+
+	var reader = new FileReader();
+	var contents;
+	reader.onload = function(event) {
+		contents = JSON.parse(event.target.result);
+	};
+
+	reader.onerror = function(event) {
+		console.error("File could not be read! Code " + event.target.error.code);
+	};
+
+	reader.readAsText(file);
+
+	return "localhost:80";
+	//return "173.33.147.9:7676"
+
 }
 
 function navMouseOver(sectionNumber) {
