@@ -1,5 +1,11 @@
 
 var globalConfig;
+var externalIP;
+
+function getip(json){
+	console.log("Connecting From : "+json.ip);
+	externalIP = json.ip.toString();
+}
 
 function loadJSON(path, callback) {
 
@@ -17,6 +23,12 @@ function loadJSON(path, callback) {
 function getConfig(){
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
+		var ip = globalConfig.ip;
+		if(ip == externalIP){
+			console.log("Connecting from within Server's Router. Updating Connection Details");
+			globalConfig.ip = "192.168.0.204";
+			globalConfig.port = "80";
+		}
 		console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
 	});
 }
