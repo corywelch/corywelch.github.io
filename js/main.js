@@ -1,25 +1,32 @@
 
-function getConfig(item){
+var globalConfig;
 
+function loadJSON(path, callback) {
+
+	var xobj = new XMLHttpRequest();
+	xobj.overrideMimeType("application/json");
+	xobj.open('GET', path, true); // Replace 'my_data' with the path to your file
+	xobj.onreadystatechange = function () {
+		if (xobj.readyState == 4 && xobj.status == "200") {
+			// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+			callback(xobj.responseText);
+		}
+	};
+	xobj.send(null);
+}
+function getConfig(){
+	loadJSON('config.properties',function(response){
+		globalConfig = JSON.parse(response);
+		console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
+	});
 }
 
+$(document).ready(function(){
+	getConfig();
+});
+
 function getServerURL() {
-
-	var reader = new FileReader();
-	var contents;
-	reader.onload = function(event) {
-		contents = JSON.parse(event.target.result);
-	};
-
-	reader.onerror = function(event) {
-		console.error("File could not be read! Code " + event.target.error.code);
-	};
-
-	reader.readAsText(file);
-
-	return "localhost:80";
-	//return "173.33.147.9:7676"
-
+	return (globalConfig.ip+":"+globalConfig.port);
 }
 
 function navMouseOver(sectionNumber) {
