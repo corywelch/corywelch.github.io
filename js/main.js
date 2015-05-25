@@ -9,7 +9,6 @@ function getip(){
 		type: "GET",
 		dataType: "JSON",
 		success: function(json) {
-			console.log(JSON.stringify(json));
 			console.log("Connecting From : "+json.ip);
 			externalIP = json.ip.toString();
 			externalIPdetermined = true;
@@ -40,7 +39,6 @@ function getip(){
 	if(!externalIPdetermined){
 		userDetLocation();
 	}
-	return;
 }
 
 function userDetLocation() {
