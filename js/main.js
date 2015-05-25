@@ -5,8 +5,9 @@ var externalIPdetermined = false;
 
 function getipSuccess(json){
 	console.log("Connecting From : "+json.ip);
-	externalIP = json.ip.toString();
+	externalIP = json.ip;
 	externalIPdetermined = true;
+	getConfig();
 }
 
 function getip(){
@@ -42,6 +43,7 @@ function userDetLocation() {
 		externalIPdetermined = true;
 		externalIP = "173.33.147.9";
 	}
+	getConfig();
 }
 
 function loadJSON(path, callback) {
@@ -61,7 +63,7 @@ function getConfig(){
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
 		if(globalConfig.env != "dev"){
-			getip();
+			//alert(globalConfig.ip + " : " + externalIP);
 			if(globalConfig.ip == externalIP && externalIPdetermined == true){
 				console.log("Connecting from within Server's Router.");
 				globalConfig.ip = "192.168.0.204";
@@ -76,7 +78,7 @@ function getConfig(){
 }
 
 $(document).ready(function(){
-	getConfig();
+	getip();
 });
 
 function getServerURL() {
