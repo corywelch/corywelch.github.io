@@ -3,33 +3,47 @@ var globalConfig;
 var externalIP;
 var externalIPdetermined = false;
 
-function getip(json){
-	if(json == undefined || json == null || json.ip == undefined || json.ip == "" || json.ip == null){
-		console.log("http://jsonip.appspot.com/?callback=getip is not getting ip");
-		externalIPdetermined = false;
-		console.log("Trying another source");
-		$.get("http://ipinfo.io", function(response) {
-			if(response == undefined || response == null || response.ip == undefined || response.ip == "" || response.ip == null){
-				console.log("http://ipinfo.io is not getting ip");
-				externalIPdetermined = false;
-				userDetLocation();
-			} else {
-				console.log("Connecting From : "+response.ip);
-				externalIP = response.ip.toString();
-				externalIPdetermined = true;
-			};
-		}, "jsonp");
-	} else {
-		console.log("Connecting From : "+json.ip);
-		externalIP = json.ip.toString();
-		externalIPdetermined = true;
+function getip(){
+	$.ajax({
+		url: "http://jsonip.appspot.com/?callback=getip",
+		type: "GET",
+		success: function(json) {
+			console.log("Connecting From : "+json.ip);
+			externalIP = json.ip.toString();
+			externalIPdetermined = true;
+		},
+		error: function(json) {
+			console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(json));
+			externalIPdetermined = false;
+		}
+	});
+	if(externalIPdetermined){
+		return
 	}
+	console.log("Trying another source");
+	$.ajax({
+		url: "http://ipinfo.io",
+		type: "GET",
+		success: function(json) {
+			console.log("Connecting From : "+json.ip);
+			externalIP = json.ip.toString();
+			externalIPdetermined = true;
+		},
+		error: function(json) {
+			console.log("Error with http://ipinfo.io : "+ JSON.stringify(json));
+			externalIPdetermined = false;
+		}
+	});
+	if(!externalIPdetermined){
+		userDetLocation();
+	}
+	return;
 }
 
 function userDetLocation() {
-	if(confirm("Are you connecting from outside the servers router?") == true) {
+	if(confirm("Assuming you are connecting from outside the servers router?") == true) {
 		externalIPdetermined = true;
-		externalIP = "0.0.0.0";
+		externalIP = "1.1.1.1";
 	} else {
 		externalIPdetermined = true;
 		externalIP = "173.33.147.9";
@@ -52,12 +66,17 @@ function loadJSON(path, callback) {
 function getConfig(){
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
-		var ip = globalConfig.ip;
-		if(ip == externalIP && externalIPdetermined == true){
-			console.log("Connecting from within Server's Router. Updating Connection Details");
-			globalConfig.ip = "192.168.0.204";
-			globalConfig.port = "80";
+		if(globalConfig.env != "dev"){
+			getip();
+			if(globalConfig.ip == externalIP && externalIPdetermined == true){
+				console.log("Connecting from within Server's Router. Updating Connection Details");
+				globalConfig.ip = "192.168.0.204";
+				globalConfig.port = "80";
+			}
+		} else {
+			console.log("Connecting from localhost.");
 		}
+
 		console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
 	});
 }

@@ -30,10 +30,10 @@ div {
 .section {
 	height: 100vh;
 	min-height: 600px;
-	max-height: 850px;
+	max-height: 1800px;
 	width: 100vw;
 	min-width: 700px;
-	max-width: 1500px;
+	max-width: 2880px;
 }
 
 .titleContainer {
