@@ -14,7 +14,7 @@ function getip(){
 		url: "http://jsonip.appspot.com/",
 		type: "GET",
 		dataType: "JSON",
-		success: getipSuccess(response),
+		success: function(response){getipSuccess(response);},
 		error: function(json) {
 			console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(json));
 			externalIPdetermined = false;
@@ -23,7 +23,7 @@ function getip(){
 				url: "http://ipinfo.io",
 				type: "GET",
 				dataType: "JSON",
-				success: getipSuccess(response),
+				success: function(response){getipSuccess(response);},
 				error: function(json) {
 					console.log("Error with http://ipinfo.io : "+ JSON.stringify(json));
 					externalIPdetermined = false;
