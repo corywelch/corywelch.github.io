@@ -13,14 +13,7 @@ function getipSuccess(json){
 	} else {
 		console.log("Connecting From : "+json.ip);
 	}
-}
-
-function userDetLocation() {
-	if(globalConfig.ip == externalIP){
-		console.log("Connecting from within Server's Router.");
-		globalConfig.ip = "192.168.0.204";
-		globalConfig.port = "80";
-	}
+	console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
 }
 
 function loadJSON(path, callback) {
@@ -60,16 +53,16 @@ function getConfig(){
 							} else {
 								externalIP = "173.33.147.9";
 							}
-							userDetLocation();
+							getipSuccess();
 						}
 					});
 				}
 			});
 		} else {
 			console.log("Connecting from localhost.");
+			console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
 		}
 
-		console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
 	});
 }
 
