@@ -1,49 +1,26 @@
 
 var globalConfig;
 var externalIP;
-var externalIPdetermined = false;
+
+var navClickedBool = false;
 
 function getipSuccess(json){
-	console.log("Connecting From : "+json.ip);
 	externalIP = json.ip;
-	externalIPdetermined = true;
-	getConfig();
-}
-
-function getip(){
-	$.ajax({
-		url: "http://jsonip.appspot.com/",
-		type: "GET",
-		dataType: "JSON",
-		success: function(response){getipSuccess(response);},
-		error: function(json) {
-			console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(json));
-			externalIPdetermined = false;
-			console.log("Trying another source");
-			$.ajax({
-				url: "http://ipinfo.io",
-				type: "GET",
-				dataType: "JSON",
-				success: function(response){getipSuccess(response);},
-				error: function(json) {
-					console.log("Error with http://ipinfo.io : "+ JSON.stringify(json));
-					externalIPdetermined = false;
-					userDetLocation();
-				}
-			});
-		}
-	});
+	if(globalConfig.ip == externalIP){
+		console.log("Connecting from within Server's Router.");
+		globalConfig.ip = "192.168.0.204";
+		globalConfig.port = "80";
+	} else {
+		console.log("Connecting From : "+json.ip);
+	}
 }
 
 function userDetLocation() {
-	if(confirm("Assuming you are connecting from outside the servers router?") == true) {
-		externalIPdetermined = true;
-		externalIP = "1.1.1.1";
-	} else {
-		externalIPdetermined = true;
-		externalIP = "173.33.147.9";
+	if(globalConfig.ip == externalIP){
+		console.log("Connecting from within Server's Router.");
+		globalConfig.ip = "192.168.0.204";
+		globalConfig.port = "80";
 	}
-	getConfig();
 }
 
 function loadJSON(path, callback) {
@@ -62,13 +39,32 @@ function loadJSON(path, callback) {
 function getConfig(){
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
-		if(globalConfig.env != "dev"){
-			//alert(globalConfig.ip + " : " + externalIP);
-			if(globalConfig.ip == externalIP && externalIPdetermined == true){
-				console.log("Connecting from within Server's Router.");
-				globalConfig.ip = "192.168.0.204";
-				globalConfig.port = "80";
-			}
+		if(globalConfig.env == "live"){
+			$.ajax({
+				url: "http://jsonip.appspot.com/",
+				type: "GET",
+				dataType: "JSON",
+				success: function(response){getipSuccess(response);},
+				error: function(json) {
+					console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(json));
+					console.log("Trying another source");
+					$.ajax({
+						url: "http://ipinfo.io",
+						type: "GET",
+						dataType: "JSON",
+						success: function(response){getipSuccess(response);},
+						error: function(json) {
+							console.log("Error with http://ipinfo.io : "+ JSON.stringify(json));
+							if(confirm("Assuming you are connecting from outside the servers router?") == true) {
+								externalIP = "1.1.1.1";
+							} else {
+								externalIP = "173.33.147.9";
+							}
+							userDetLocation();
+						}
+					});
+				}
+			});
 		} else {
 			console.log("Connecting from localhost.");
 		}
@@ -78,7 +74,7 @@ function getConfig(){
 }
 
 $(document).ready(function(){
-	getip();
+	getConfig();
 });
 
 function getServerURL() {
@@ -86,22 +82,27 @@ function getServerURL() {
 }
 
 function navMouseOver(sectionNumber) {
-	for(var i = 1; i <=4; i++){
-		if(i != sectionNumber){
-			$("#section"+i).addClass("hidden");
-			$("#navsection"+i).removeClass("section"+i).addClass("section"+i+"unselected");
-		} else {
-			$("#section"+i).removeClass("hidden");
-			$("#navsection"+i).removeClass("section"+i+"unselected").addClass("section"+i);
+	if(!navClickedBool){
+		for(var i = 1; i <=4; i++){
+			if(i != sectionNumber){
+				$("#section"+i).addClass("hidden");
+				$("#navsection"+i).removeClass("section"+i).addClass("section"+i+"unselected");
+			} else {
+				$("#section"+i).removeClass("hidden");
+				$("#navsection"+i).removeClass("section"+i+"unselected").addClass("section"+i);
+			}
 		}
 	}
 }
 
 function navClicked(sectionNumber) {
+
 	navMouseOver(sectionNumber);
+	navClickedBool = true;
 	$('html,body').animate({
 		scrollTop: $("#section"+sectionNumber).offset().top
 	},800);
+	navClickedBool = false;
 }
 
 function login() {
