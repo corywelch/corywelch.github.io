@@ -59,20 +59,20 @@ function getConfig(){
 		globalConfig = JSON.parse(response);
 		if(globalConfig.env == "live"){
 			$.ajax({
-				url: "http://jsonip.appspot.com/callback=?",
+				url: "http://ipinfo.io",
 				type: "GET",
 				dataType: "JSON",
 				success: function(response){getipSuccess(response);},
 				error: function(json) {
-					console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(json));
+					console.log("Error with http://ipinfo.io : "+ JSON.stringify(json));
 					console.log("Trying another source");
 					$.ajax({
-						url: "http://ipinfo.io",
+						url: "http://jsonip.appspot.com/callback=?",
 						type: "GET",
 						dataType: "JSON",
 						success: function(response){getipSuccess(response);},
 						error: function(json) {
-							console.log("Error with http://ipinfo.io : "+ JSON.stringify(json));
+							console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(json));
 							if(confirm("Assuming you are connecting from outside the servers router?") == true) {
 								externalIP = "1.1.1.1";
 							} else {
