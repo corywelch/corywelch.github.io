@@ -1,9 +1,29 @@
+'use strict';
 
-var globalConfig;
+var globalConfig = {
+	"ip":"",
+	"port":"",
+	"env":""
+};
 var externalIP;
 
 var navClickedBool = false;
 
+//function to setup session storage
+function initSession(){
+	console.log("Setting up Session Storage");
+	if(typeof(Storage) !== "undefined") {
+		sessionStorage.EXTERNALIP = externalIP;
+		sessionStorage.SERVERIP = globalConfig.ip;
+		sessionStorage.SERVERPORT = globalConfig.port;
+		sessionStorage.ENVIRONMENT = globalConfig.env;
+	} else {
+		console.log("No Web Storage Support on your browse");
+	}
+	console.log("Setup and Config Complete :)")
+}
+
+//Used as the success callback for getting external ip address
 function getipSuccess(json){
 	externalIP = json.ip;
 	if(globalConfig.ip == externalIP){
@@ -13,9 +33,11 @@ function getipSuccess(json){
 	} else {
 		console.log("Connecting From : "+json.ip);
 	}
-	console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
+	console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env);
+	initSession();
 }
 
+//Function to send local ajax request, used to load local files
 function loadJSON(path, callback) {
 
 	var xobj = new XMLHttpRequest();
@@ -29,12 +51,15 @@ function loadJSON(path, callback) {
 	};
 	xobj.send(null);
 }
+
+//Function called to make calls to determine external ip and set global config variable for use anywhere within the app
 function getConfig(){
+	console.log("Getting Config");
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
 		if(globalConfig.env == "live"){
 			$.ajax({
-				url: "http://jsonip.appspot.com/",
+				url: "http://jsonip.appspot.com/callback=?",
 				type: "GET",
 				dataType: "JSON",
 				success: function(response){getipSuccess(response);},
@@ -60,20 +85,19 @@ function getConfig(){
 			});
 		} else {
 			console.log("Connecting from localhost.");
-			console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env+"\n");
+			console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env);
+			initSession();
 		}
 
 	});
 }
 
-$(document).ready(function(){
-	getConfig();
-});
-
+//function that gets the server address for use of server calls
 function getServerURL() {
 	return (globalConfig.ip+":"+globalConfig.port);
 }
 
+//function used to change selected panel on top section
 function navMouseOver(sectionNumber) {
 	if(!navClickedBool){
 		for(var i = 1; i <=4; i++){
@@ -88,6 +112,7 @@ function navMouseOver(sectionNumber) {
 	}
 }
 
+//function used to animate and lock the section moving too
 function navClicked(sectionNumber) {
 
 	navMouseOver(sectionNumber);
@@ -98,6 +123,25 @@ function navClicked(sectionNumber) {
 	navClickedBool = false;
 }
 
+//function login success function
+function loggedIn(){
+	$("#workoutLogin").fadeOut(1000, function() {
+		$("#workoutContent").fadeIn(1000, function() {
+
+		});
+	});
+}
+
+//function for when already logged in
+function alreadyLoggedIn(){
+	$("#workoutLogin").fadeOut(10, function() {
+		$("#workoutContent").fadeIn(10, function() {
+
+		});
+	});
+}
+
+//function used for login confirmation with the server, called by section 4 Workout Tracking
 function login() {
 	var username = $('#username').val();
 	var password = $('#password').val();
@@ -109,9 +153,11 @@ function login() {
 		data: ("name="+username+"&pass="+password),
 		success: function(reply) {
 			if(reply=="success") {
-				alert("Logged In Successfully");
+				//alert("Logged In Successfully");
+				sessionStorage.LOGGEDIN = true;
+				loggedIn();
 			} else if(reply=="invalid") {
-				alert("Invalid Credentials");
+				//alert("Invalid Credentials");
 			} else {
 				alert("An Error Occurred : " + reply);
 			}
@@ -120,5 +166,16 @@ function login() {
 			alert(error);
 		}
 	});
-
 }
+
+//init function - runs after page load
+$(document).ready(function(){
+	getConfig();
+	if(typeof(Storage) !== "undefined") {
+		if(sessionStorage.LOGGEDIN){
+			alreadyLoggedIn();
+		}
+	} else {
+		console.log("No Web Storage Support on your browse");
+	}
+});

@@ -73,17 +73,17 @@ div {
 
 .section1 {
 	background-color: #DEA749;
-	color: #FFFFFF;
+	color: #222222;
 }
 
 .section2 {
 	background-color: #6DB571;
-	color: #FFFFFF;
+	color: #222222;
 }
 
 .section3 {
 	background-color: #B28BD9;
-	color: #FFFFFF;
+	color: #222222;
 }
 
 .section4 {
@@ -93,15 +93,15 @@ div {
 
 .section1unselected {
 	background-color: #C89642;
-	color: #FFFFFF;
+	color: #222222;
 }
 .section2unselected {
 	background-color: #62A366;
-	color: #FFFFFF;
+	color: #222222;
 }
 .section3unselected {
 	background-color: #A07DC3;
-	color: #FFFFFF;
+	color: #222222;
 }
 .section4unselected {
 	background-color: #7AB9E1;

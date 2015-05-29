@@ -17,3 +17,14 @@
 	padding: 10px 10px 10px 10px;
 	width: 300px;
 }
+
+.dashboardContent {
+	padding: 1% 1% 1% 1%;
+}
+
+.dashboard {
+	background-color: #FFFFFF;
+	color: #000000;
+	height: 98%;
+	width: 98%;
+}
