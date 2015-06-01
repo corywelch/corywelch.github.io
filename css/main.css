@@ -119,6 +119,16 @@ div {
 	position: relative;
 }
 
+.statusTextSpan {
+	height: 20px;
+	background-image: url('../img/StatusLightWhite.png');
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+
+.errorText {
+	color: #8A0000;
+}
 
 
 /*
