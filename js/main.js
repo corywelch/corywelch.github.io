@@ -165,6 +165,7 @@ function ping(callback){
 	var URL = "http://"+ getServerURL() + "/status.php";
 	$.ajax({
 		url: URL,
+		timeout: 5000,
 		success: function(result){
 			if(result == "success"){
 				callback("success");
