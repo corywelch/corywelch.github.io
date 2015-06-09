@@ -216,6 +216,15 @@ function loggedIn(){
 	});
 }
 
+//function logout
+function loggedOut(){
+	$("#workoutContent").fadeOut(500, function() {
+		$("#workoutLogin").fadeIn(250, function() {
+
+		});
+	});
+}
+
 //function for when already logged in
 function alreadyLoggedIn(){
 	$("#workoutLogin").fadeOut(10, function() {
@@ -250,14 +259,17 @@ function login() {
 			success: function(reply) {
 				if(reply=="success") {
 					//alert("Logged In Successfully");
+					console.log("Logged In Successfully");
 					$("#workoutLoginMessage").removeClass("errorText").text("Logged in Successfully");
 					sessionStorage.LOGGEDIN = true;
 					loggedIn();
 				} else if(reply=="invalid") {
 					//alert("Invalid Credentials");
+					console.log("Invalid Credentials");
 					$("#workoutLoginMessage").addClass("errorText").text("Invalid Credentials");
 				} else {
-					alert("An Error Occurred : " + reply);
+					//alert("An Error Occurred : " + reply);
+					console.log("An Error Occurred : " + reply);
 					$("#workoutLoginMessage").addClass("errorText").text("An Error Occurred");
 				}
 			},
@@ -270,7 +282,12 @@ function login() {
 		$("#workoutLoginMessage").addClass("errorText").text("Can't Login to Server when it is down");
 
 	}
+}
 
+//logout function
+function logout() {
+	sessionStorage.LOGGEDIN = false;
+	loggedOut();
 }
 
 //init function - runs after page load
@@ -284,3 +301,10 @@ $(document).ready(function(){
 		console.log("No Web Storage Support on your browser");
 	}
 });
+
+//enter to login
+function loginButtonKeyup(event){
+	if(event.keyCode == "13" || event.which == 13){
+		login();
+	}
+}

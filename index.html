@@ -46,14 +46,14 @@
 						<table>
 							<tr>
 								<td>Username: </td>
-								<td><input type="text" id="username"></td>
+								<td><input type="text" id="username" onkeyup="loginButtonKeyup(event)"></td>
 							</tr>
 							<tr>
 								<td>Password: </td>
-								<td><input type="password" id="password" ></td>
+								<td><input type="password" id="password" onkeyup="loginButtonKeyup(event)"></td>
 							</tr>
 							<tr>
-								<td colspan="2"><input type="button" value="Login" onclick="login()"></td>
+								<td colspan="2"><input type="button" id="loginButton" value="Login" onclick="login()"></td>
 							</tr>
 							<tr>
 								<td colspan="2"><span id="workoutLoginMessage"></span></td>
@@ -64,10 +64,14 @@
 						</table>
 					</div>
 				</div>
-				<div id="workoutContent" class="content dashboardContent" style="display: none">
-					<div class="dashboard dashboard1">Content 1</div>
-					<div class="dashboard dashboard2">Content 2</div>
-					<div class="dashboard dashboard3">Content 3</div>
+				<div id="workoutContent" class="content" style="display: none; height: 100%">
+					<div class="dashboardContent">
+						<div class="dashboard">
+							<div id="contentBanner">
+								<span id="logoutButton" onclick="logout()">Logout</span>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

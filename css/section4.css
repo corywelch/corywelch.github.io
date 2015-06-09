@@ -25,28 +25,18 @@
 .dashboardContent {
 	height: 98%;
 	width: 98%;
-	padding: 10px 10px 10px 10px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 10px;
 }
 
 .dashboard {
-	margin: 0 0 0 0;
-	padding: 0 0 0 0;
+	height: 100%;
+	width: 100%;
+	background-color: #CCCCCC;
+}
+
+.dashboardBanner {
+	width: 100%;
 	background-color: #FFFFFF;
-	color: #000000;
-	display: inline-block;
-}
-
-.dashboard1 {
-	width: 10%;
-	height: 50%
-}
-
-.dashboard2 {
-	height: 10%;
-	width: 25%;
-}
-
-.dashboard3 {
-	height: 33%;
-	width: 33%;
 }
