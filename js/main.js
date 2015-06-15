@@ -14,35 +14,19 @@ function getServerStatus(){
 	ping(function callback(status){
 		if(status == "success"){
 			console.log("Connected to Server");
-			if(typeof(Storage) !== "undefined") {
-				sessionStorage.SERVERSTATUS = "Connected";
-			} else {
-				window.SERVERSTATUS = "Connected";
-			}
+			sessionStorage.SERVERSTATUS = "Connected";
 			$("#workoutServerStatus").css("background-image",'url("img/StatusLightGreen.png")').text("Connected");
 		} else if(status == "noresponse"){
 			console.log("Server Not Available");
-			if(typeof(Storage) !== "undefined") {
-				sessionStorage.SERVERSTATUS = "Not Available";
-			} else {
-				window.SERVERSTATUS = "Not Available";
-			}
+			sessionStorage.SERVERSTATUS = "Not Available";
 			$("#workoutServerStatus").css("background-image","url('img/StatusLightRed.png')").text("Not Available");
 		} else if(status == "error"){
 			console.log("Server Returned Error");
-			if(typeof(Storage) !== "undefined") {
-				sessionStorage.SERVERSTATUS = "Error";
-			} else {
-				window.SERVERSTATUS = "Error";
-			}
+			sessionStorage.SERVERSTATUS = "Error";
 			$("#workoutServerStatus").css("background-image","url('img/StatusLightAmber.png')").text("Error");
 		} else {
 			console.log("An Unknown Server Response Received");
-			if(typeof(Storage) !== "undefined") {
-				sessionStorage.SERVERSTATUS = "Unknown";
-			} else {
-				window.SERVERSTATUS = "Unknown";
-			}
+			sessionStorage.SERVERSTATUS = "Unknown";
 			$("#workoutServerStatus").css("background-image","url('img/StatusLightDarkGrey.png')").text("Unknown Response");
 		}
 	});
@@ -65,11 +49,7 @@ function initSession(){
 //Used as the success callback for getting external ip address
 function getipSuccess(json){
 	var exIP = json.ip;
-	if(typeof(Storage) !== "undefined") {
-		sessionStorage.EXTERNALIP = json.ip;
-	} else {
-		window.externalIP = json.ip;
-	}
+	sessionStorage.EXTERNALIP = json.ip;
 	if(globalConfig.ip == exIP){
 		console.log("Connecting from within Server's Router.");
 		globalConfig.ip = "192.168.0.204";
@@ -127,18 +107,10 @@ function getConfig(){
 								"ip":""
 							}
 							if(confirm("Assuming you are connecting from outside the servers router?") == true) {
-								if(typeof(Storage) !== "undefined") {
-									sessionStorage.EXTERNALIP = "1.1.1.1";
-								} else {
-									window.externalIP = "1.1.1.1";
-								}
+								sessionStorage.EXTERNALIP = "1.1.1.1";
 								config.ip = "1.1.1.1";
 							} else {
-								if(typeof(Storage) !== "undefined") {
-									sessionStorage.EXTERNALIP = "173.33.147.9";
-								} else {
-									window.externalIP = "173.33.147.9";
-								}
+								sessionStorage.EXTERNALIP = "173.33.147.9";
 								config.ip = "173.33.147.9";
 							}
 							getipSuccess(config);
@@ -203,15 +175,20 @@ function navClicked(sectionNumber) {
 	navClickedBool = true;
 	$('html,body').animate({
 		scrollTop: $("#section"+sectionNumber).offset().top
-	},800);
-	navClickedBool = false;
+	},800,function() {
+		navClickedBool = false;
+	});
+
 }
 
 //function login success function
-function loggedIn(){
+function loggedIn(reply){
 	$("#workoutLogin").fadeOut(1000, function() {
 		$("#workoutContent").fadeIn(1000, function() {
-
+			console.log("User ID : "+reply.id);
+			console.log("Username : "+reply.username);
+			console.log("First Name : "+reply.firstname);
+			console.log("Last Name : "+reply.lastname);
 		});
 	});
 }
@@ -237,14 +214,8 @@ function alreadyLoggedIn(){
 //function used for login confirmation with the server, called by section 4 Workout Tracking
 function login() {
 	var serverUp = false;
-	if(typeof(Storage) != "undefined"){
-		if(sessionStorage.SERVERSTATUS == "Connected"){
-			serverUp = true;
-		}
-	} else {
-		if(window.SERVERSTATUS == "Connected"){
-			serverUp = true;
-		}
+	if(sessionStorage.SERVERSTATUS == "Connected"){
+		serverUp = true;
 	}
 
 	if(serverUp){
@@ -254,27 +225,35 @@ function login() {
 		$.ajax({
 			type: "POST",
 			url: URL,
-			dataType: "text",
+			dataType: "json",
 			data: ("name="+username+"&pass="+password),
 			success: function(reply) {
-				if(reply=="success") {
+				if(reply.message =="success") {
 					//alert("Logged In Successfully");
 					console.log("Logged In Successfully");
 					$("#workoutLoginMessage").removeClass("errorText").text("Logged in Successfully");
 					sessionStorage.LOGGEDIN = true;
-					loggedIn();
-				} else if(reply=="invalid") {
+					$('#password').val("");
+					loggedIn(reply);
+				} else if(reply.message =="invalid") {
 					//alert("Invalid Credentials");
 					console.log("Invalid Credentials");
 					$("#workoutLoginMessage").addClass("errorText").text("Invalid Credentials");
-				} else {
+					$('#password').val("");
+				} else if(reply.message == "error"){
 					//alert("An Error Occurred : " + reply);
-					console.log("An Error Occurred : " + reply);
+					console.log("An Error Occurred : " + reply.errormessage);
 					$("#workoutLoginMessage").addClass("errorText").text("An Error Occurred");
+					$('#password').val("");
+				} else {
+					console.log("An Uncaught Error Occurred");
+					$("#workoutLoginMessage").addClass("errorText").text("An Error Occurred");
+					$('#password').val("");
 				}
 			},
 			error: function(error){
-				alert(error);
+				console.log(JSON.stringify(error));
+				alert("Error : " + JSON.stringify(error));
 			}
 		});
 	} else {
@@ -287,6 +266,7 @@ function login() {
 //logout function
 function logout() {
 	sessionStorage.LOGGEDIN = false;
+	console.log("Logging Out");
 	loggedOut();
 }
 
@@ -294,11 +274,13 @@ function logout() {
 $(document).ready(function(){
 	getConfig();
 	if(typeof(Storage) !== "undefined") {
-		if(sessionStorage.LOGGEDIN){
+		if(sessionStorage.LOGGEDIN == "true"){
 			alreadyLoggedIn();
 		}
 	} else {
-		console.log("No Web Storage Support on your browser");
+		console.log("No Web Storage Support on your browser.\n" +
+			"Some features may not function as designed.\n" +
+			"You should update your browser to the latest version to ensure compatibility with this site.");
 	}
 });
 
