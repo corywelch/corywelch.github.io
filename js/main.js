@@ -189,6 +189,11 @@ function loggedIn(reply){
 			console.log("Username : "+reply.username);
 			console.log("First Name : "+reply.firstname);
 			console.log("Last Name : "+reply.lastname);
+			sessionStorage.USERID = reply.id;
+			sessionStorage.USERUSERNAME = reply.username;
+			sessionStorage.USERFIRSTNAME = reply.firstname;
+			sessionStorage.USERLASTNAME = reply.lastname;
+			dashboardUpdate();
 		});
 	});
 }
@@ -197,7 +202,10 @@ function loggedIn(reply){
 function loggedOut(){
 	$("#workoutContent").fadeOut(500, function() {
 		$("#workoutLogin").fadeIn(250, function() {
-
+			sessionStorage.removeItem("USERID");
+			sessionStorage.removeItem("USERUSERNAME");
+			sessionStorage.removeItem("USERFIRSTNAME");
+			sessionStorage.removeItem("USERLASTNAME");
 		});
 	});
 }
@@ -206,7 +214,7 @@ function loggedOut(){
 function alreadyLoggedIn(){
 	$("#workoutLogin").fadeOut(10, function() {
 		$("#workoutContent").fadeIn(10, function() {
-
+			dashboardUpdate();
 		});
 	});
 }
@@ -278,9 +286,11 @@ $(document).ready(function(){
 			alreadyLoggedIn();
 		}
 	} else {
-		console.log("No Web Storage Support on your browser.\n" +
+		var message = "No Web Storage Support on your browser.\n" +
 			"Some features may not function as designed.\n" +
-			"You should update your browser to the latest version to ensure compatibility with this site.");
+			"You should update your browser to the latest version to ensure compatibility with this site.";
+		console.log(message);
+		alert(message);
 	}
 });
 
@@ -289,4 +299,9 @@ function loginButtonKeyup(event){
 	if(event.keyCode == "13" || event.which == 13){
 		login();
 	}
+}
+
+//function to populate dashboards data
+function dashboardUpdate(){
+	$("#dashboardTitle").text(sessionStorage.USERFIRSTNAME + " " + sessionStorage.USERLASTNAME + "'s Dashboard");
 }
