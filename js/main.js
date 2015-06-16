@@ -218,15 +218,18 @@ function alreadyLoggedIn(){
 		});
 	});
 }
+//function to return in server is up
+function serverUp(){
+	if(sessionStorage.SERVERSTATUS == "Connected"){
+		return true;
+	} else {
+		return false;
+	}
+}
 
 //function used for login confirmation with the server, called by section 4 Workout Tracking
 function login() {
-	var serverUp = false;
-	if(sessionStorage.SERVERSTATUS == "Connected"){
-		serverUp = true;
-	}
-
-	if(serverUp){
+	if(serverUp()){
 		var username = $('#username').val();
 		var password = $('#password').val();
 		var URL = "http://"+ getServerURL() + "/login.php";
@@ -304,4 +307,27 @@ function loginButtonKeyup(event){
 //function to populate dashboards data
 function dashboardUpdate(){
 	$("#dashboardTitle").text(sessionStorage.USERFIRSTNAME + " " + sessionStorage.USERLASTNAME + "'s Dashboard");
+	getWorkouts();
+}
+
+//function get workouts
+function getWorkouts(){
+	var userid = Number(sessionStorage.USERID);
+
+	if(serverUp()){
+		var URL = "http://"+ getServerURL() + "/getWorkouts.php";
+		$.ajax({
+			type: 'GET',
+			url: URL,
+			dataType: 'json',
+			data: ("userid="+userid),
+			success: function(reply){
+				$('#workouts').text(JSON.stringify(reply));
+			},
+			error: function(error){
+				console.log(JSON.stringify(error));
+				alert("Error : " + JSON.stringify(error));
+			}
+		})
+	}
 }
