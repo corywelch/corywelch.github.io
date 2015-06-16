@@ -315,7 +315,7 @@ function getWorkouts(){
 	var userid = Number(sessionStorage.USERID);
 
 	if(serverUp()){
-		var URL = "http://"+ getServerURL() + "/getWorkouts.php";
+		var URL = "http://192.168.0.204:80/getWorkouts";
 		$.ajax({
 			type: 'GET',
 			url: URL,
