@@ -129,7 +129,7 @@ function getConfig(){
 
 //function that gets the server address for use of server calls
 function getServerURL() {
-	return (globalConfig.ip+":"+globalConfig.port);
+	return (sessionStorage.SERVERIP+":"+sessionStorage.SERVERPORT);
 }
 
 //function for testing ping to server
@@ -315,7 +315,7 @@ function getWorkouts(){
 	var userid = Number(sessionStorage.USERID);
 
 	if(serverUp()){
-		var URL = "http://192.168.0.204:80/getWorkouts";
+		var URL = "http://"+ getServerURL() + "/getWorkouts";
 		$.ajax({
 			type: 'GET',
 			url: URL,
