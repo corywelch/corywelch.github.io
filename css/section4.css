@@ -5,7 +5,9 @@
 }
 
 .section4Container {
-	height: 100%;
+	height:auto;
+	min-height: 100vh;
+	max-height: none;
 }
 
 .loginContent {
@@ -55,4 +57,42 @@
 	margin-right: 5px;
 	padding-left: 8px;
 	padding-top: 2px;
+}
+
+#workouts {
+
+}
+
+.workoutContainer {
+	background-color: #FFFFFF;
+	padding-left: 20px;
+	width: 80%;
+	border: 1px solid #222222;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.workoutContent {
+	height: 30px;
+}
+.moveContainer {
+	background-color: #EEEEEE;
+	padding-left: 40px;
+	width: 80%;
+	border: 1px solid #222222;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.moveContent {
+	height: 25px;
+}
+.setContainer {
+	background-color: #DDDDDD;
+	padding-left: 60px;
+	width: 80%;
+	border: 1px solid #222222;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.setContent {
+	height: 20px;
 }

@@ -322,7 +322,30 @@ function getWorkouts(){
 			dataType: 'json',
 			data: ("userid="+userid),
 			success: function(reply){
-				$('#workouts').text(JSON.stringify(reply));
+				console.log("Workout Data Recieved for "+ sessionStorage.USERID);
+				for(var w=0; w<reply.length; w++){
+					$('#workouts').append($("<div></div>").attr("id","workoutContainer"+w).attr("class","workoutContainer"));
+					var workoutid = 'workout'+w;
+					var workout = $("<div></div>").attr("id",workoutid).attr("class","workoutContent").text('Workout at '+reply[w].location+' on '+reply[w].date+' at '+reply[w].starttime);
+					$('#workoutContainer'+w).append(workout);
+					for(var m=0; m<reply[w].move.length; m++){
+						$('#workoutContainer'+w).append($("<div></div>").attr("id","moveContainer"+m).attr("class","moveContainer"));
+						var moveid = 'move'+m;
+						var amove = $("<div></div>").attr("id",moveid).attr("class","moveContent").text(reply[w].move[m].baseexercisename);
+						$('#moveContainer'+m).append(amove);
+						var reals = 0;
+						for(var s=0; s<reply[w].move[m].set.length; s++){
+							reals += s;
+							for(var r=0;r<reply[w].move[m].set[s].repetition;r++){
+								reals += r;
+								$('#moveContainer'+m).append($("<div></div>").attr("id","setContainer"+reals+'move'+m).attr("class","setContainer"));
+								var setid = 'set'+reals;
+								var aset = $("<div></div>").attr("id",setid).attr("class","setContent").text(reply[w].move[m].set[s].exercise +" "+reply[w].move[m].set[s].exercisetype+" "+reply[w].move[m].set[s].settype+" "+reply[w].move[m].set[s].reptime+" x "+reply[w].move[m].set[s].weight+reply[w].move[m].set[s].unit);
+								$('#setContainer'+reals+'move'+m).append(aset);
+							}
+						}
+					}
+				}
 			},
 			error: function(error){
 				console.log(JSON.stringify(error));
