@@ -334,15 +334,27 @@ function getWorkouts(){
 						var amove = $("<div></div>").attr("id",moveid).attr("class","moveContent").text(reply[w].move[m].baseexercisename);
 						$('#moveContainer'+m).append(amove);
 						var reals = 0;
-						for(var s=0; s<reply[w].move[m].set.length; s++){
-							reals += s;
-							for(var r=0;r<reply[w].move[m].set[s].repetition;r++){
-								reals += r;
-								$('#moveContainer'+m).append($("<div></div>").attr("id","setContainer"+reals+'move'+m).attr("class","setContainer"));
-								var setid = 'set'+reals;
-								var aset = $("<div></div>").attr("id",setid).attr("class","setContent").text(reply[w].move[m].set[s].exercise +" "+reply[w].move[m].set[s].exercisetype+" "+reply[w].move[m].set[s].settype+" "+reply[w].move[m].set[s].reptime+" x "+reply[w].move[m].set[s].weight+reply[w].move[m].set[s].unit);
-								$('#setContainer'+reals+'move'+m).append(aset);
+						var currentOrder = 0;
+						var setindexarray = [];
+						var setorderarray = [];
+						var setrepetitionarray = [];
+						for(var s=0; s<reply[w].move[m].set.length;s++){
+							setorderarray.push(reply[w].move[m].set[s].order);
+							setrepetitionarray.push(Number(reply[w].move[m].set[s].repetition));
+						}
+						for(var i=setorderarray[0]; i<setorderarray[setorderarray.length-1];i++){
+							var prevorder = 0;
+							for(var s=0; s<reply[w].move[m].set.length; s++){
+								if(Number(reply[w].move[m].set[s].order) == prevorder+1){
+									setindexarray.push(s);
+								}
 							}
+						}
+						for(var s=0; s<reply[w].move[m].set.length; s++){
+							$('#moveContainer'+m).append($("<div></div>").attr("id","setContainer"+s+'move'+m).attr("class","setContainer"));
+							var setid = 'set'+s;
+							var aset = $("<div></div>").attr("id",setid).attr("class","setContent").text(reply[w].move[m].set[s].exercise +" "+reply[w].move[m].set[s].settype+" Set - "+reply[w].move[m].set[s].reptime+" x "+reply[w].move[m].set[s].weight+reply[w].move[m].set[s].unit);
+							$('#setContainer'+s+'move'+m).append(aset);
 						}
 					}
 				}
