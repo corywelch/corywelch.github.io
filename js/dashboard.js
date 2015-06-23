@@ -90,6 +90,7 @@ function login() {
 function logout() {
 	sessionStorage.LOGGEDIN = false;
 	console.log("Logging Out");
+	$("#workouts").empty();
 	loggedOut();
 }
 
@@ -121,20 +122,60 @@ function getWorkouts(){
 				console.log("Workout Data Recieved for "+ sessionStorage.USERID + " : "+ sessionStorage.USERUSERNAME);
 				window.workoutData = reply;
 				for(var w=0; w<reply.length; w++){
-					$('#workouts').append($("<div></div>").attr("id","workoutContainer"+w).attr("class","workoutContainer"));
+					$('#workouts').append($("<div></div>")
+							.attr("id","workoutContainer"+w)
+							.attr("class","workoutContainer"));
+
 					var workoutid = 'workout'+w;
-					var workout = $("<div></div>").attr("id",workoutid).attr("class","workoutContent").attr("onclick","workoutClicked('workoutContainer"+w+"')").text('Workout at '+reply[w].location+' on '+reply[w].date+' at '+reply[w].starttime);
-					$('#workoutContainer'+w).append(workout);
+
+					var aworkout = $("<div></div>")
+							.attr("id",workoutid)
+							.attr("class","workoutContent")
+							.attr("onclick","workoutClicked('workoutContainer"+w+"','"+workoutid+"')")
+							.attr("onmouseover","workoutContentMouseEvent('"+workoutid+"')")
+							.attr("onmouseout","workoutContentMouseEvent('"+workoutid+"')")
+							.text('Workout at '+reply[w].location+' on '+reply[w].date+' at '+reply[w].starttime);
+
+					$('#workoutContainer'+w).append(aworkout);
+
+					if(reply[w].workoutnote != "" && reply[w].workoutnote != null){
+						$('#'+workoutid).text($('#'+workoutid).text()+" - Note: "+reply[w].workoutnote.toString());
+					}
+
 					for(var m=0; m<reply[w].move.length; m++){
-						$('#workoutContainer'+w).append($("<div></div>").attr("id","moveContainer"+m+'workout'+w).attr("class","moveContainer hidden"));
-						var moveid = 'move'+m;
-						var amove = $("<div></div>").attr("id",moveid).attr("class","moveContent").attr("onclick","moveClicked('moveContainer"+m+"workout"+w+"')").text(reply[w].move[m].baseexercisename);
+						$('#workoutContainer'+w).append($("<div></div>")
+								.attr("id","moveContainer"+m+'workout'+w)
+								.attr("class","moveContainer hidden"));
+
+						var moveid = workoutid+'move'+m;
+
+						var amove = $("<div></div>").attr("id",moveid)
+								.attr("class","moveContent")
+								.attr("onclick","moveClicked('moveContainer"+m+"workout"+w+"','"+moveid+"')")
+								.attr("onmouseover","moveContentMouseEvent('"+moveid+"')")
+								.attr("onmouseout","moveContentMouseEvent('"+moveid+"')")
+								.text(reply[w].move[m].baseexercisename);
+
 						$('#moveContainer'+m+'workout'+w).append(amove);
+
+						if(reply[w].move[m].movenote != "" && reply[w].move[m].movenote != null){
+							$('#'+moveid).text($('#'+moveid).text()+" - Note: "+reply[w].move[m].movenote.toString());
+						}
+
 						for(var s=0; s<reply[w].move[m].set.length; s++){
 							$('#moveContainer'+m+'workout'+w).append($("<div></div>").attr("id","setContainer"+s+'move'+m+'workout'+w).attr("class","setContainer hidden"));
-							var setid = 'set'+s;
-							var aset = $("<div></div>").attr("id",setid).attr("class","setContent").text(reply[w].move[m].set[s].exercise +" "+reply[w].move[m].set[s].settype+" Set - "+reply[w].move[m].set[s].reptime+" x "+reply[w].move[m].set[s].weight+reply[w].move[m].set[s].unit);
+
+							var setid = moveid+'set'+s;
+
+							var aset = $("<div></div>")
+									.attr("id",setid).attr("class","setContent")
+									.text(reply[w].move[m].set[s].exercise +" "+reply[w].move[m].set[s].settype+" Set - "+reply[w].move[m].set[s].reptime+" x "+reply[w].move[m].set[s].weight+reply[w].move[m].set[s].unit);
+
 							$('#setContainer'+s+'move'+m+'workout'+w).append(aset);
+
+							if(reply[w].move[m].set[s].setnote != "" && reply[w].move[m].set[s].setnote != null){
+								$('#'+setid).text($('#'+setid).text()+" - Note: "+reply[w].move[m].set[s].setnote.toString());
+							}
 						}
 					}
 				}
@@ -148,12 +189,45 @@ function getWorkouts(){
 }
 
 //function for workout content clicked
-function workoutClicked(id){
+function workoutClicked(id,me){
 	$('#'+id).children('.moveContainer').toggleClass('hidden');
+	$('#'+me).toggleClass('workoutContentClicked');
 }
 
 //function for move content clicked
-function moveClicked(id){
+function moveClicked(id,me){
 	$('#'+id).children('.setContainer').toggleClass('hidden');
+	$('#'+me).toggleClass('moveContentClicked');
+}
+
+function workoutContentMouseEvent(id){
+	$('#'+id).toggleClass('workoutContentMouseOver')
+}
+
+function moveContentMouseEvent(id){
+	$('#'+id).toggleClass('moveContentMouseOver')
+}
+
+var currentNewWorkoutStatus = "Green";
+function newWorkoutMouseOn(){
+	$("#newWorkoutButtonContainer").addClass('newWorkoutButtonContainerMouseOver'+currentNewWorkoutStatus);
+}
+function newWorkoutMouseOut(){
+	$("#newWorkoutButtonContainer").removeClass('newWorkoutButtonContainerMouseOver'+currentNewWorkoutStatus);
+
+}
+
+function newWorkout(){
+	if($('#newWorkoutContainer').children().length > 0){
+		$("#newWorkout").remove();
+		currentNewWorkoutStatus = "Green";
+		$('#newWorkoutButton').css("background-image",'url("img/AddButton.png")');
+	} else {
+		var workout = $('<div></div>').attr("id","newWorkout").text("New Workout");
+		$("#newWorkoutContainer").append(workout);
+		currentNewWorkoutStatus = "Red";
+		$('#newWorkoutButton').css("background-image","url('img/MinusButton.png')");
+	}
+	$("#newWorkoutButtonContainer").removeClass('newWorkoutButtonContainerMouseOverRed').removeClass('newWorkoutButtonContainerMouseOverGreen');
 }
 

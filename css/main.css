@@ -71,11 +71,6 @@ div {
 	height: 97.5%;
 }
 
-.section1 {
-	background-color: #DEA749;
-	color: #222222;
-}
-
 .section2 {
 	background-color: #6DB571;
 	color: #222222;
@@ -86,20 +81,12 @@ div {
 	color: #222222;
 }
 
-.section1unselected {
-	background-color: #C89642;
-	color: #222222;
-}
 .section2unselected {
 	background-color: #62A366;
 	color: #222222;
 }
 .section3unselected {
 	background-color: #A07DC3;
-	color: #222222;
-}
-.section4unselected {
-	background-color: #7AB9E1;
 	color: #222222;
 }
 
@@ -112,13 +99,6 @@ div {
 .content {
 	font-size: 16px;
 	position: relative;
-}
-
-.statusTextSpan {
-	height: 22px;
-	background-image: url('../img/StatusLightWhite.png');
-	background-repeat: no-repeat;
-	padding-left: 25px;
 }
 
 .errorText {
@@ -139,5 +119,5 @@ Firefox: -moz-
 
 Internet Explorer: -ms-
 
-As bonus: Opera: -o-
+Opera: -o-
 */

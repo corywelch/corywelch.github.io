@@ -4,8 +4,13 @@
 	color: #222222;
 }
 
+.section4unselected {
+	background-color: #7AB9E1;
+	color: #222222;
+}
+
 .section4Container {
-	height:auto;
+	height: auto;
 	min-height: 100vh;
 	max-height: none;
 }
@@ -24,6 +29,13 @@
 	width: 300px;
 }
 
+.statusTextSpan {
+	height: 22px;
+	background-image: url('../img/StatusLightWhite.png');
+	background-repeat: no-repeat;
+	padding-left: 25px;
+}
+
 .dashboardContent {
 	height: 98%;
 	width: 98%;
@@ -38,7 +50,7 @@
 }
 
 #dashboardBanner {
-	background-color: #AAAAAA;
+	background-color: #BBBBBB;
 	height: 40px;
 	padding-top: 10px;
 	padding-left: 15px;
@@ -71,7 +83,7 @@
 	margin-left: 10px;
 }
 .workoutContent {
-	background-color: #CCCCCC;
+	background-color: #999999;
 	height: 30px;
 	border: 1px solid #222222;
 	border-radius:15px;
@@ -79,11 +91,18 @@
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
+.workoutContentClicked {
+	background-color: #BBBBBB;
+}
+.workoutContentMouseOver {
+	background-color: #DDDDDD;
+}
+
 .moveContainer {
 	padding-left:20px;
 }
 .moveContent {
-	background-color: #DDDDDD;
+	background-color: #CCCCCC;
 	height: 25px;
 	border: 1px solid #222222;
 	padding-left: 40px;
@@ -91,15 +110,50 @@
 	padding-bottom: 10px;
 	border-radius:10px;
 }
+.moveContentClicked {
+	background-color: #EEEEEE;
+}
+.moveContentMouseOver {
+	background-color: #FFFFFF;
+}
+
 .setContainer {
 	padding-left: 20px;
 }
 .setContent {
-	background-color: #EEEEEE;
+	background-color: #FFFFFF;
 	height: 20px;
 	border: 1px solid #222222;
 	padding-left: 60px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	border-radius:5px;
+}
+
+#newWorkoutButtonContainer {
+	margin-left:30px;
+	border: 2px solid #444444;
+	border-radius: 15px;
+	width: 150px;
+	padding: 5px 5px 5px 5px;
+	margin-bottom: 10px;
+}
+
+.newWorkoutButtonContainerMouseOverGreen {
+	background-color: #90EE90;
+}
+.newWorkoutButtonContainerMouseOverRed {
+	background-color: #EE9090;
+}
+
+#newWorkoutButton {
+	height: 30px;
+	padding-top: 10px;
+	padding-left: 46px;
+	background-image: url('../img/AddButton.png');
+	background-repeat: no-repeat;
+}
+
+#newWorkout {
+
 }

@@ -193,6 +193,8 @@ function navClicked(sectionNumber) {
 
 //init function - runs after page load
 $(document).ready(function(){
+	$('#javascriptOffMessage').addClass('hidden');
+	$('#NavSection').removeClass('hidden');
 	getConfig();
 	if(typeof(Storage) !== "undefined") {
 		if(sessionStorage.LOGGEDIN == "true"){

@@ -4,12 +4,13 @@
 		<title>Cory Welch's Website</title>
 		<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
-		<link rel="stylesheet" type="text/css" href="css/section4.css">
+		<link rel="stylesheet" type="text/css" href="css/aboutMe.css">
+		<link rel="stylesheet" type="text/css" href="css/workoutTracking.css">
 		<script src="js/main.js"></script>
 		<script src="js/dashboard.js"></script>
 	</head>
 	<body>
-		<div id="NavSection" class="section">
+		<div id="NavSection" class="section hidden">
 			<div class="titleContainer">
 				<div class="title">Cory Welch's Website</div>
 			</div>
@@ -36,7 +37,11 @@
 				</li>
 			</ul>
 		</div>
-		<div id="section1" class="section section1 hidden">About Me</div>
+		<div id="section1" class="section section1 hidden">
+			<div class="container section1Container section1">
+
+			</div>
+		</div>
 		<div id="section2" class="section section2 hidden">My Projects</div>
 		<div id="section3" class="section section3 hidden">File Server</div>
 		<div id="section4" class="section section4 hidden">
@@ -72,11 +77,16 @@
 								<span id="dashboardTitle">Your Dashboard</span>
 								<span id="logoutButton" onclick="logout()">Logout</span>
 							</div>
+							<div id="newWorkoutButtonContainer" onclick='newWorkout()' onmouseover="newWorkoutMouseOn()" onmouseout="newWorkoutMouseOut()">
+								<div id="newWorkoutButton">New Workout</div>
+							</div>
+							<div id="newWorkoutContainer"></div>
 							<div id="workouts"></div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div id="javascriptOffMessage">If you see this message, then javascript is turned off or not supported on your browser. Turn it on to use the site</div>
 	</body>
 </html>

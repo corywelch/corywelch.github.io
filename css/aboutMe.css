@@ -1,0 +1,16 @@
+
+.section1 {
+	background-color: #DEA749;
+	color: #222222;
+}
+
+.section1unselected {
+	background-color: #C89642;
+	color: #222222;
+}
+
+.section1Container {
+	height: auto;
+	min-height: 100vh;
+	max-height: none;
+}
