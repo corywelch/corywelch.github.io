@@ -185,7 +185,8 @@ function getWorkouts(){
 				console.log(JSON.stringify(error));
 				alert("Error : " + JSON.stringify(error));
 			}
-		})
+		});
+		setupNewWorkout();
 	}
 }
 

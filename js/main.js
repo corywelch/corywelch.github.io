@@ -197,7 +197,7 @@ $(document).ready(function(){
 	$('#NavSection').removeClass('hidden');
 	$( "#newWorkoutDate" ).datepicker({ dateFormat: 'yy-mm-dd'});
 	getConfig();
-	setupNewWorkout();
+
 	if(typeof(Storage) !== "undefined") {
 		if(sessionStorage.LOGGEDIN == "true"){
 			alreadyLoggedIn();
