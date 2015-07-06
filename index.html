@@ -2,10 +2,13 @@
 <html xmlns="http://www.w3.org/1999/html">
 	<head>
 		<title>Cory Welch's Website</title>
+		<link rel="stylesheet" type="text/css" href="css/jquery-ui1.11.2.css">
 		<script type="text/javascript" src="js/jquery-1.11.2.js"></script>
+		<script type="text/javascript" src="js/jquery-ui1.11.2.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<link rel="stylesheet" type="text/css" href="css/aboutMe.css">
 		<link rel="stylesheet" type="text/css" href="css/workoutTracking.css">
+		<link rel="icon" type="image/png" href="img/Icon.png" sizes="32x32">
 		<script src="js/main.js"></script>
 		<script src="js/dashboard.js"></script>
 	</head>
@@ -80,7 +83,39 @@
 							<div id="newWorkoutButtonContainer" onclick='newWorkout()' onmouseover="newWorkoutMouseOn()" onmouseout="newWorkoutMouseOut()">
 								<div id="newWorkoutButton">New Workout</div>
 							</div>
-							<div id="newWorkoutContainer"></div>
+							<div id="newWorkoutContainer">
+								<div id="newWorkout" class="hidden">
+									<table>
+										<tr>
+											<td>Location:</td>
+											<td><select id="newWorkoutLocation"></select></td>
+										</tr>
+										<tr>
+											<td>Date:</td>
+											<td><input id="newWorkoutDate" type="text"></td>
+										</tr>
+										<tr>
+											<td>Start Time:</td>
+											<td>
+												<input id="newWorkoutHour" class="newWorkoutTimeInput" type="text" maxlength="2">:<input id="newWorkoutMinute" class="newWorkoutTimeInput" type="text" maxlength="2">
+												<select id="newWorkoutTimeType">
+													<option value="AM">AM</option>
+													<option value="PM">PM</option>
+													<option value="24">24 Hour</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td>Note:</td>
+											<td><input id="newWorkoutNote" type="text"></td>
+										</tr>
+										<tr>
+											<td><button id="submitNewWorkoutButton">Submit</button></td>
+											<td></td>
+										</tr>
+									</table>
+								</div>
+							</div>
 							<div id="workouts"></div>
 						</div>
 					</div>

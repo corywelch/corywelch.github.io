@@ -155,5 +155,19 @@
 }
 
 #newWorkout {
+	width: 80%;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	margin-left: 20px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 20px;
+	background-color: #BBBBBB;
+	border: 2px solid;
+	border-color: #222222;
+	border-radius: 10px;
+}
 
+.newWorkoutTimeInput{
+	width: 20px;
 }

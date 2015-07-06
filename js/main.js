@@ -104,7 +104,7 @@ function getConfig(){
 						error: function(response2) {
 							console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(response2));
 							var config = {
-								"ip":""
+								"ip":"0.0.0.0"
 							}
 							if(confirm("Assuming you are connecting from outside the servers router?") == true) {
 								sessionStorage.EXTERNALIP = "1.1.1.1";
@@ -147,7 +147,7 @@ function ping(callback){
 				callback(result);
 			}
 		},
-		error: function(result){
+		error: function(){
 			callback("noresponse");
 		}
 	});
@@ -195,7 +195,9 @@ function navClicked(sectionNumber) {
 $(document).ready(function(){
 	$('#javascriptOffMessage').addClass('hidden');
 	$('#NavSection').removeClass('hidden');
+	$( "#newWorkoutDate" ).datepicker({ dateFormat: 'yy-mm-dd'});
 	getConfig();
+	setupNewWorkout();
 	if(typeof(Storage) !== "undefined") {
 		if(sessionStorage.LOGGEDIN == "true"){
 			alreadyLoggedIn();

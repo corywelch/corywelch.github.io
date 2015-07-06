@@ -44,7 +44,7 @@ function login() {
 	if(serverUp()){
 		var username = $('#username').val();
 		var password = $('#password').val();
-		var URL = "http://"+ getServerURL() + "/login.php";
+		var URL = "http://"+ getServerURL() + "/workout/login.php";
 		$.ajax({
 			type: "POST",
 			url: URL,
@@ -91,6 +91,7 @@ function logout() {
 	sessionStorage.LOGGEDIN = false;
 	console.log("Logging Out");
 	$("#workouts").empty();
+	$("#workoutLoginMessage").removeClass("errorText").text("Logged out Successfully");
 	loggedOut();
 }
 
@@ -112,7 +113,7 @@ function getWorkouts(){
 	var userid = Number(sessionStorage.USERID);
 
 	if(serverUp()){
-		var URL = "http://"+ getServerURL() + "/getWorkouts";
+		var URL = "http://"+ getServerURL() + "/workout/getWorkouts";
 		$.ajax({
 			type: 'GET',
 			url: URL,
@@ -218,16 +219,36 @@ function newWorkoutMouseOut(){
 }
 
 function newWorkout(){
-	if($('#newWorkoutContainer').children().length > 0){
-		$("#newWorkout").remove();
+	if(currentNewWorkoutStatus == "Red"){
 		currentNewWorkoutStatus = "Green";
 		$('#newWorkoutButton').css("background-image",'url("img/AddButton.png")');
+		$("#newWorkout").addClass("hidden");
 	} else {
-		var workout = $('<div></div>').attr("id","newWorkout").text("New Workout");
-		$("#newWorkoutContainer").append(workout);
 		currentNewWorkoutStatus = "Red";
 		$('#newWorkoutButton').css("background-image","url('img/MinusButton.png')");
+		$("#newWorkout").removeClass("hidden");
 	}
 	$("#newWorkoutButtonContainer").removeClass('newWorkoutButtonContainerMouseOverRed').removeClass('newWorkoutButtonContainerMouseOverGreen');
+	$("#newWorkoutButtonContainer").addClass('newWorkoutButtonContainerMouseOver'+currentNewWorkoutStatus);
 }
 
+function setupNewWorkout(){
+	var URL = "http://"+ getServerURL() + "/workout/get.php";
+	$.ajax({
+		type:"GET",
+		url: URL,
+		dataType: "json",
+		data: ("field=location"),
+		success: function(reply) {
+			for(var i=0; i<reply.length; i++){
+				var opt = $('<option></option>').attr("value",reply[i].id).text(reply[i].name);
+				$("#newWorkoutLocation").append(opt);
+			}
+		},
+		error: function(error){
+			console.log(JSON.stringify(error));
+			alert("Error : " + JSON.stringify(error));
+		}
+
+	})
+}
