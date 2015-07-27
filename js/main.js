@@ -9,9 +9,8 @@ var globalConfig = {
 var navClickedBool = false;
 
 //function to get system status
-function getServerStatus(){
+function getServerStatus(status){
 	console.log("Getting Server Status");
-	ping(function callback(status){
 		if(status == "success"){
 			console.log("Connected to Server");
 			sessionStorage.SERVERSTATUS = "Connected";
@@ -29,36 +28,6 @@ function getServerStatus(){
 			sessionStorage.SERVERSTATUS = "Unknown";
 			$("#workoutServerStatus").css("background-image","url('img/StatusLightDarkGrey.png')").text("Unknown Response");
 		}
-	});
-}
-
-//function to setup session storage
-function initSession(){
-	console.log("Setting up Session Storage");
-	if(typeof(Storage) !== "undefined") {
-		sessionStorage.SERVERIP = globalConfig.ip;
-		sessionStorage.SERVERPORT = globalConfig.port;
-		sessionStorage.ENVIRONMENT = globalConfig.env;
-	} else {
-		console.log("No Web Storage Support on your browse");
-	}
-	console.log("Setup and Config Complete :)");
-	getServerStatus();
-}
-
-//Used as the success callback for getting external ip address
-function getipSuccess(json){
-	var exIP = json.ip;
-	sessionStorage.EXTERNALIP = json.ip;
-	if(globalConfig.ip == exIP){
-		console.log("Connecting from within Server's Router.");
-		globalConfig.ip = "192.168.0.204";
-		globalConfig.port = "80";
-	} else {
-		console.log("Connecting From : "+json.ip);
-	}
-	console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env);
-	initSession();
 }
 
 //Function to send local ajax request, used to load local files
@@ -76,67 +45,37 @@ function loadJSON(path, callback) {
 	xobj.send(null);
 }
 
-//function called to make calls to determine external ip and set global config variable for use anywhere within the app
+//function to get config from config.properties. Test connection to server and set variables
 function getConfig(){
 	console.log("Getting Config");
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
-		if(globalConfig.env == "live"){
-			$.ajax({
-				url: "http://ipinfo.io",
-				type: "GET",
-				dataType: "JSON",
-				success: function(response){
-					console.log("ipinfo.io response : "+JSON.stringify(response));
-					getipSuccess(response);
-				},
-				error: function(response) {
-					console.log("Error with http://ipinfo.io : "+ JSON.stringify(response));
-					console.log("Trying another source");
-					$.ajax({
-						url: "http://jsonip.appspot.com/callback=?",
-						type: "GET",
-						dataType: "JSON",
-						success: function(response2){
-							console.log("jsonip.appspot.com response : "+JSON.stringify(response2));
-							getipSuccess(response2);
-						},
-						error: function(response2) {
-							console.log("Error with http://jsonip.appspot.com : "+ JSON.stringify(response2));
-							var config = {
-								"ip":"0.0.0.0"
-							}
-							if(confirm("Assuming you are connecting from outside the servers router?") == true) {
-								sessionStorage.EXTERNALIP = "1.1.1.1";
-								config.ip = "1.1.1.1";
-							} else {
-								sessionStorage.EXTERNALIP = "173.33.147.9";
-								config.ip = "173.33.147.9";
-							}
-							getipSuccess(config);
-						}
-					});
-				}
-			});
-		} else {
-			console.log("Connecting from localhost.");
-			console.log("Config Loaded\nIP : "+globalConfig.ip+"\nPORT : "+globalConfig.port+"\nENVIRONMENT : "+globalConfig.env);
-			initSession();
-		}
+		ping("http://"+globalConfig.ip+":"+globalConfig.port,function(result){
+			if(result == "noresponse"){
+				console.log("External IP timeout. Checking Internal");
+				ping("http://"+globalConfig.intip+":"+globalConfig.port,function(result2){
+					sessionStorage.SERVERIP = globalConfig.intip;
+					sessionStorage.SERVERPORT = globalConfig.port;
+					console.log("Connecting via "+globalConfig.intip+":"+globalConfig.port);
+					getServerStatus(result2);
 
+				});
+			} else {
+				sessionStorage.SERVERIP = globalConfig.ip;
+				sessionStorage.SERVERPORT = globalConfig.port;
+				console.log("Connecting via "+globalConfig.ip+":"+globalConfig.port);
+				getServerStatus(result);
+			}
+		});
 	});
 }
 
-//function that gets the server address for use of server calls
-function getServerURL() {
-	return (sessionStorage.SERVERIP+":"+sessionStorage.SERVERPORT);
-}
-
 //function for testing ping to server
-function ping(callback){
-	var URL = "http://"+ getServerURL() + "/status.php";
+function ping(url,callback){
+	var URL = url + "/status.php";
 	$.ajax({
 		url: URL,
+		type: "GET",
 		timeout: 5000,
 		success: function(result){
 			if(result == "success"){
@@ -151,6 +90,11 @@ function ping(callback){
 			callback("noresponse");
 		}
 	});
+}
+
+//function that gets the server address for use of server calls
+function getServerURL() {
+	return (sessionStorage.SERVERIP+":"+sessionStorage.SERVERPORT);
 }
 
 //function to return in server is up

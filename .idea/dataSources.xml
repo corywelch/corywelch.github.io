@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1919798888">
+    <data-source source="LOCAL" name="MySQL - websiteData@127.0.0.1" uuid="bd242a16-bab4-4c14-9f4d-059303985f0c">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/websiteData</jdbc-url>
+      <user-name>server</user-name>
+      <user-password>dfc9dfdddfcfdfc6dfc9dfc2</user-password>
+      <schema-pattern>websiteData.*</schema-pattern>
+      <default-schemas>websiteData.*</default-schemas>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

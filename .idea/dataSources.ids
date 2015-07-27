@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL - websiteData@127.0.0.1" uuid="bd242a16-bab4-4c14-9f4d-059303985f0c">
+    <database-info product="MySQL" version="5.6.22" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="upper"/>
+    <schema name="" catalog="websiteData"/>
+    <table name="exercise" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="unit" sqlType="VARCHAR" length="10" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="description" sqlType="VARCHAR" length="511" precision="0" nullable="true" jdbcType="12"/>
+      <column name="type" sqlType="VARCHAR" length="11" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="move_ibfk_2" table="move" schema="" catalog="websiteData" columns="base_exercise_id"/>
+      <exported-key name="set_ibfk_2" table="set" schema="" catalog="websiteData" columns="exercise_id"/>
+      <index name="UniqueName" unique="true" columns="name"/>
+    </table>
+    <table name="location" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" length="255" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="move" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="base_exercise_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="note" sqlType="VARCHAR" length="500" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="move_ibfk_1" columns="user_id" ref-table="user" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="move_ibfk_2" columns="base_exercise_id" ref-table="exercise" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="move_set_link_ibfk_1" table="move_set_link" schema="" catalog="websiteData" columns="move_id"/>
+      <exported-key name="workout_move_link_ibfk_2" table="workout_move_link" schema="" catalog="websiteData" columns="move_id"/>
+    </table>
+    <table name="move_set_link" schema="" catalog="websiteData" type="TABLE">
+      <column name="move_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="set_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="repetition" sqlType="INT" length="10" precision="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="order" sqlType="INT UNSIGNED" length="10" precision="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <foreign-key name="move_set_link_ibfk_1" columns="move_id" ref-table="move" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="move_set_link_ibfk_2" columns="set_id" ref-table="set" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+    </table>
+    <table name="set" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="set_type_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="exercise_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="weight" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="reps_time" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="note" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="set_ibfk_1" columns="set_type_id" ref-table="set_type" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="set_ibfk_2" columns="exercise_id" ref-table="exercise" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <exported-key name="move_set_link_ibfk_2" table="move_set_link" schema="" catalog="websiteData" columns="set_id"/>
+    </table>
+    <table name="set_type" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="type" sqlType="VARCHAR" length="50" precision="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="set_ibfk_1" table="set" schema="" catalog="websiteData" columns="set_type_id"/>
+    </table>
+    <table name="user" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="firstname" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="J0ZpcnN0Jw=="/>
+      <column name="lastname" sqlType="VARCHAR" length="255" precision="0" nullable="true" jdbcType="12" def="J0xhc3Qn"/>
+      <column name="username" sqlType="VARCHAR" length="16" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="password" sqlType="VARCHAR" length="20" precision="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="move_ibfk_1" table="move" schema="" catalog="websiteData" columns="user_id"/>
+      <index name="UniqueUsername" unique="true" columns="username"/>
+    </table>
+    <table name="workout" schema="" catalog="websiteData" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="location_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATE" length="10" precision="0" nullable="false" jdbcType="91"/>
+      <column name="note" sqlType="VARCHAR" length="500" precision="0" nullable="true" jdbcType="12"/>
+      <column name="start_time" sqlType="TIME" length="8" precision="0" nullable="false" jdbcType="92" def="JzE4OjAwOjAwJw=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="workout_move_link_ibfk_1" table="workout_move_link" schema="" catalog="websiteData" columns="workout_id"/>
+    </table>
+    <table name="workout_move_link" schema="" catalog="websiteData" type="TABLE">
+      <column name="workout_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="move_id" sqlType="INT UNSIGNED" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="order" sqlType="INT UNSIGNED" length="10" precision="0" nullable="true" jdbcType="4"/>
+      <foreign-key name="workout_move_link_ibfk_1" columns="workout_id" ref-table="workout" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+      <foreign-key name="workout_move_link_ibfk_2" columns="move_id" ref-table="move" ref-schema="" ref-catalog="websiteData" ref-columns="id" update-rule="0" delete-rule="3" deferrability="2"/>
+    </table>
+  </data-source>
+</component>
