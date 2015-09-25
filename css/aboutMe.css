@@ -17,7 +17,7 @@
 
 .linksContainer {
 	height: 100px;
-	width: 310px;
+	width: 205px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -25,11 +25,6 @@
 	width:100px;
 	height:100px;
 	display: inline-block;
-}
-
-.facebook {
-	background: url("../img/facebookicon.png") no-repeat;
-	background-size: 100px 100px;
 }
 
 .linkedin {
@@ -42,10 +37,6 @@
 	background-size: 100px 100px;
 }
 
-.facebookunselected {
-	background: url("../img/facebookicondark.png") no-repeat;
-	background-size: 100px 100px;
-}
 
 .linkedinunselected {
 	background: url("../img/linkedinicondark.png") no-repeat;
