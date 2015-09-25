@@ -71,6 +71,10 @@ div {
 	height: 97.5%;
 }
 
+.navText {
+	text-align: center;
+}
+
 .section2 {
 	background-color: #6DB571;
 	color: #222222;

@@ -97,7 +97,7 @@ function getServerURL() {
 	return (sessionStorage.SERVERIP+":"+sessionStorage.SERVERPORT);
 }
 
-//function to return in server is up
+//function to return if server is up
 function serverUp(){
 	if(sessionStorage.SERVERSTATUS == "Connected"){
 		return true;
@@ -132,6 +132,10 @@ function navClicked(sectionNumber) {
 		navClickedBool = false;
 	});
 
+}
+
+function accountLinkMouseOver(site){
+	$('#'+site).toggleClass(site+'unselected').toggleClass(site);
 }
 
 

@@ -14,3 +14,54 @@
 	min-height: 100vh;
 	max-height: none;
 }
+
+.linksContainer {
+	height: 100px;
+	width: 310px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.accountLink {
+	width:100px;
+	height:100px;
+	display: inline-block;
+}
+
+.facebook {
+	background: url("../img/facebookicon.png") no-repeat;
+	background-size: 100px 100px;
+}
+
+.linkedin {
+	background: url("../img/linkedinicon.png") no-repeat;
+	background-size: 100px 100px;
+}
+
+.github {
+	background: url("../img/githubicon.png") no-repeat;
+	background-size: 100px 100px;
+}
+
+.facebookunselected {
+	background: url("../img/facebookicondark.png") no-repeat;
+	background-size: 100px 100px;
+}
+
+.linkedinunselected {
+	background: url("../img/linkedinicondark.png") no-repeat;
+	background-size: 100px 100px;
+}
+
+.githubunselected {
+	background: url("../img/githubicondark.png") no-repeat;
+	background-size: 100px 100px;
+}
+
+#aboutMeContent {
+	padding-top: 200px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 200px;
+	text-align: center;
+	height: 200px;
+}
