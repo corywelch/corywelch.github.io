@@ -8,6 +8,16 @@ var globalConfig = {
 
 var navClickedBool = false;
 
+//function to store all images needed for site. This allows for preloading of images
+var images = new Array();
+
+//overwritting original console.log to include timestamp
+console.logCopy = console.log.bind(console);
+console.log = function(data) {
+	var currentDate = '[' + new Date().toString() + '] ';
+	this.logCopy(currentDate, data);
+}
+
 //function to get system status
 function getServerStatus(status){
 	console.log("Getting Server Status");
@@ -50,8 +60,12 @@ function getConfig(){
 	console.log("Getting Config");
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
+		console.log("Config");
+		console.log(" -> Environment: "+globalConfig.env);
+		console.log(" -> Ip: "+globalConfig.ip);
+		console.log(" -> Port: "+globalConfig.port);
 		ping("http://"+globalConfig.ip+":"+globalConfig.port,function(result){
-			if(result == "noresponse"){
+			if(result == "noresponse" && globalConfig.env != 'dev'){
 				console.log("External IP timeout. Checking Internal");
 				ping("http://"+globalConfig.intip+":"+globalConfig.port,function(result2){
 					sessionStorage.SERVERIP = globalConfig.intip;
@@ -60,6 +74,11 @@ function getConfig(){
 					getServerStatus(result2);
 
 				});
+			} else if(result == "noresponse"){
+				sessionStorage.SERVERIP = globalConfig.ip;
+				sessionStorage.SERVERPORT = globalConfig.port;
+				console.log("Connecting to Dev Environment. However Server is down");
+				getServerStatus(result);
 			} else {
 				sessionStorage.SERVERIP = globalConfig.ip;
 				sessionStorage.SERVERPORT = globalConfig.port;
@@ -154,13 +173,34 @@ function homeTitleClick(){
 
 }
 
+// function to preload images to the cache for proper use later.
+function imagePreload() {
+	console.log("Preloading Images:");
+	for (var i = 0; i < arguments.length; i++) {
+		images[i] = new Image();
+		images[i].src = arguments[i];
+		console.log(" -> "+arguments[i]);
+	}
+}
+
 
 //init function - runs after page load
 $(document).ready(function(){
-	$('#javascriptOffMessage').addClass('hidden');
-	$('#MainSection').removeClass('hidden');
-	$('#NavSection').removeClass('hidden');
-	$( "#newWorkoutDate" ).datepicker({ dateFormat: 'yy-mm-dd'});
+	imagePreload(
+		"img/Homeimage.JPG",
+		"img/Icon.png",
+		"img/linkedinicon.png",
+		"img/githubicon.png",
+		"img/linkedinicondark.png",
+		"img/githubicondark.png",
+		"img/StatusLightGreen.png",
+		"img/StatusLightRed.png",
+		"img/StatusLightAmber.png",
+		"img/StatusLightWhite.png",
+		"img/StatusLightDarkGrey.png",
+		"img/AddButton.png",
+		"img/MinusButton.png"
+	);
 	getConfig();
 
 	if(typeof(Storage) !== "undefined") {
@@ -174,4 +214,11 @@ $(document).ready(function(){
 		console.log(message);
 		alert(message);
 	}
+	$('#javascriptOffMessage').addClass('hidden');
+	$('#MainSection').removeClass('hidden');
+	$('#NavSection').removeClass('hidden');
+	$( "#newWorkoutDate" ).datepicker({ dateFormat: 'yy-mm-dd'});
+	$('#loadingScreen').addClass('hidden');
+
+
 });

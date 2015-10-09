@@ -13,12 +13,15 @@
 		<script src="js/dashboard.js"></script>
 	</head>
 	<body>
-		<div id="MainSection" class="hidden">
-			<img src="img/MainBackground.JPG" width="100%">
+		<div id="loadingScreen" class="section">
+			This Site is loading
+		</div>
+		<div id="MainSection" class="section hidden">
+			<img id="homeImage" src="img/Homeimage.JPG">
 			<div id="homeDetailsBackground" class="homeDetails homeDetailsBackground"></div>
 			<div id="homeDetails" onmouseover="homeTitleMouseOver()" onmouseout="homeTitleMouseOver()" onclick="homeTitleClick()">
 				<h1>Cory Welch</h1>
-				<p>Friendship.  Engineering.  Design</p>
+				<p>Developer. Designer. Innovator</p>
 			</div>
 		</div>
 		<div id="NavSection" class="halfsection hidden">

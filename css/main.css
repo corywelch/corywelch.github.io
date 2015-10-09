@@ -23,6 +23,7 @@
 @font-face {
 	font-family: nameFont;
 	src: url('../fonts/Arista.ttf');
+	font-style: normal;
 }
 
 html {
@@ -46,20 +47,17 @@ h1, p{
 	padding: 0;
 }
 
-h1 {
-	padding-bottom: 5px;
+#loadingScreen {
+	z-index: 500000;
 }
+
 
 .hidden {
 	display: none;
 }
 
 #MainSection {
-	width: 100vw;
-	min-width: 700px;
-	max-width: 2880px;
-	min-height: 600px;
-	max-height: 1800px;
+	overflow: hidden;
 }
 
 .homeDetails, #homeDetails {
@@ -75,12 +73,20 @@ h1 {
 	padding-top: 5px;
 }
 
+#homeImage {
+	width: 100%;
+	height: auto;
+	position: absolute;
+	bottom: 0;
+}
+
 #homeDetails h1 {
 	font-family: nameFont;
 	font-size: 50px;
 }
 #homeDetails p {
 	font-family: titleFont;
+	padding-top: 10px;
 	font-size: 20px;
 }
 
@@ -122,6 +128,8 @@ h1 {
 	margin-right: auto;
 	width: 500px;
 	height: 10%;
+	background-color: #000000;
+	z-index: 1;
 }
 
 .title {
