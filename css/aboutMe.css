@@ -4,6 +4,19 @@
 	color: #222222;
 }
 
+.section1_1 {
+	background-color: #DEA749;
+	color: #222222;
+}
+.section1_2 {
+	background-color: #DE7949;
+	color: #222222;
+}
+.section1_3 {
+	background-color: #DE4949;
+	color: #222222;
+}
+
 .section1unselected {
 	background-color: #C89642;
 	color: #222222;
@@ -17,7 +30,7 @@
 
 .linksContainer {
 	height: 100px;
-	width: 205px;
+	width: 215px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -56,3 +69,4 @@
 	text-align: center;
 	height: 200px;
 }
+

@@ -13,7 +13,15 @@
 		<script src="js/dashboard.js"></script>
 	</head>
 	<body>
-		<div id="NavSection" class="section hidden">
+		<div id="MainSection" class="hidden">
+			<img src="img/MainBackground.JPG" width="100%">
+			<div id="homeDetailsBackground" class="homeDetails homeDetailsBackground"></div>
+			<div id="homeDetails" onmouseover="homeTitleMouseOver()" onmouseout="homeTitleMouseOver()" onclick="homeTitleClick()">
+				<h1>Cory Welch</h1>
+				<p>Friendship.  Engineering.  Design</p>
+			</div>
+		</div>
+		<div id="NavSection" class="halfsection hidden">
 			<div class="titleContainer">
 				<div class="title">Cory Welch's Website</div>
 			</div>
@@ -40,9 +48,21 @@
 				</li>
 			</ul>
 		</div>
-		<div id="section1" class="section section1 hidden">
+		<div id="section1" class="section1 hidden">
 			<div class="container section1Container section1">
-				<div class="content">
+				<div class="content section1_1 section">
+					<span>Friends</span>
+					<span>Family</span>
+					<span>Engineering</span>
+					<span>Design</span>
+					<span>Development</span>
+					<span>Learning</span>
+					<span>Problem Solving</span>
+				</div>
+				<div class="content section1_2 section">
+
+				</div>
+				<div id="aboutMeQuickJump" class="content section1_3 section">
 					<div id="aboutMeContent">Cory Welch</div>
 					<div class="linksContainer">
 						<a href="https://github.com/corywelch" target="_blank">

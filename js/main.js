@@ -138,10 +138,27 @@ function accountLinkMouseOver(site){
 	$('#'+site).toggleClass(site+'unselected').toggleClass(site);
 }
 
+function homeTitleMouseOver(){
+	$('#homeDetailsBackground').toggleClass('homeDetailsBackgroundSelected').toggleClass('homeDetailsBackground');
+}
+
+function homeTitleClick(){
+	$('#homeDetailsBackground').removeClass('homeDetailsBackgroundSelected').addClass('homeDetailsBackground');
+	navMouseOver('1');
+	navClickedBool = true;
+	$('html,body').animate({
+		scrollTop: $("#aboutMeQuickJump").offset().top
+	},1500,function() {
+		navClickedBool = false;
+	});
+
+}
+
 
 //init function - runs after page load
 $(document).ready(function(){
 	$('#javascriptOffMessage').addClass('hidden');
+	$('#MainSection').removeClass('hidden');
 	$('#NavSection').removeClass('hidden');
 	$( "#newWorkoutDate" ).datepicker({ dateFormat: 'yy-mm-dd'});
 	getConfig();
