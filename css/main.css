@@ -22,7 +22,7 @@
 }
 @font-face {
 	font-family: nameFont;
-	src: url('../fonts/Arista.ttf');
+	src: url('../fonts/bingbong.ttf');
 	font-style: normal;
 }
 
@@ -32,7 +32,7 @@ html {
 	font-family: "Times New Roman", Times, serif;
 	font-family: "basic";
 	color: #000000;
-	background-color: #555555;
+	background-color: #73513D;
 	font-size: 16px;
 	border: 0;
 }
@@ -81,6 +81,7 @@ h1, p{
 }
 
 #homeDetails h1 {
+	padding-top: 5px;
 	font-family: nameFont;
 	font-size: 50px;
 }
@@ -92,7 +93,7 @@ h1, p{
 
 .homeDetailsBackground {
 	background-color: #888888;
-	opacity: 0.95;
+	opacity: 0.75;
 }
 .homeDetailsBackgroundSelected {
 	background-color: #AAAAAA;
@@ -141,7 +142,8 @@ h1, p{
 .navContainer {
 	width: 100%;
 	height: 90%;
-	background-color: #555555;
+	background-color: #5E4230;
+	background: url('../img/wood.jpg') bottom repeat-x;
 }
 
 .navItem {

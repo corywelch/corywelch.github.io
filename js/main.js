@@ -199,7 +199,8 @@ $(document).ready(function(){
 		"img/StatusLightWhite.png",
 		"img/StatusLightDarkGrey.png",
 		"img/AddButton.png",
-		"img/MinusButton.png"
+		"img/MinusButton.png",
+		"img/wood.jpg"
 	);
 	getConfig();
 
