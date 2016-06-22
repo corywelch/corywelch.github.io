@@ -22,7 +22,7 @@
 }
 @font-face {
 	font-family: nameFont;
-	src: url('../fonts/bingbong.ttf');
+	src: url('../fonts/DJBSpeakTheTruth.ttf');
 	font-style: normal;
 }
 
@@ -65,7 +65,7 @@ h1, p{
 	top: 26%;
 	left:40%;
 	width:20%;
-	height: 100px;
+	height: 125px;
 	border: 3px solid #FFFFFF;
 	border-radius: 30px;
 	color: #FFFFFF;
@@ -199,6 +199,8 @@ h1, p{
 .errorText {
 	color: #8A0000;
 }
+
+
 
 
 /*

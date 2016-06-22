@@ -3,7 +3,6 @@
 var globalConfig = {
 	"ip":"",
 	"port":"",
-	"env":""
 };
 
 var navClickedBool = false;
@@ -30,7 +29,7 @@ function getServerStatus(status){
 			sessionStorage.SERVERSTATUS = "Not Available";
 			$("#workoutServerStatus").css("background-image","url('img/StatusLightRed.png')").text("Not Available");
 		} else if(status == "error"){
-			console.log("Server Returned Error");
+			console.log("No Connection to Database");
 			sessionStorage.SERVERSTATUS = "Error";
 			$("#workoutServerStatus").css("background-image","url('img/StatusLightAmber.png')").text("Error");
 		} else {
@@ -61,30 +60,19 @@ function getConfig(){
 	loadJSON('config.properties',function(response){
 		globalConfig = JSON.parse(response);
 		console.log("Config");
-		console.log(" -> Environment: "+globalConfig.env);
 		console.log(" -> Ip: "+globalConfig.ip);
 		console.log(" -> Port: "+globalConfig.port);
 		ping("http://"+globalConfig.ip+":"+globalConfig.port,function(result){
-			if(result == "noresponse" && globalConfig.env != 'dev'){
-				console.log("External IP timeout. Checking Internal");
-				ping("http://"+globalConfig.intip+":"+globalConfig.port,function(result2){
-					sessionStorage.SERVERIP = globalConfig.intip;
-					sessionStorage.SERVERPORT = globalConfig.port;
-					console.log("Connecting via "+globalConfig.intip+":"+globalConfig.port);
-					getServerStatus(result2);
-
-				});
-			} else if(result == "noresponse"){
+			if(result == "noresponse"){
+				console.log("External Server No Response");
 				sessionStorage.SERVERIP = globalConfig.ip;
 				sessionStorage.SERVERPORT = globalConfig.port;
-				console.log("Connecting to Dev Environment. However Server is down");
-				getServerStatus(result);
 			} else {
 				sessionStorage.SERVERIP = globalConfig.ip;
 				sessionStorage.SERVERPORT = globalConfig.port;
 				console.log("Connecting via "+globalConfig.ip+":"+globalConfig.port);
-				getServerStatus(result);
 			}
+			getServerStatus(result);
 		});
 	});
 }
@@ -218,7 +206,7 @@ $(document).ready(function(){
 	$('#javascriptOffMessage').addClass('hidden');
 	$('#MainSection').removeClass('hidden');
 	$('#NavSection').removeClass('hidden');
-	$( "#newWorkoutDate" ).datepicker({ dateFormat: 'yy-mm-dd'});
+	$("#newWorkoutDate").datepicker({ dateFormat: 'yy-mm-dd'});
 	$('#loadingScreen').addClass('hidden');
 
 

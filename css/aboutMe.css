@@ -34,6 +34,10 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+
+.linksContainer a {
+	text-decoration: none;
+}
 .accountLink {
 	width:100px;
 	height:100px;
