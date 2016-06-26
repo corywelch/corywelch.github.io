@@ -2,10 +2,11 @@
 
 var globalConfig = {
 	"ip":"",
-	"port":"",
+	"port":""
 };
 
 var navClickedBool = false;
+var workingTimer = setInterval(function(){pingLoop();},10000)
 
 //function to store all images needed for site. This allows for preloading of images
 var images = new Array();
@@ -21,21 +22,30 @@ console.log = function(data) {
 function getServerStatus(status){
 	console.log("Getting Server Status");
 		if(status == "success"){
-			console.log("Connected to Server");
-			sessionStorage.SERVERSTATUS = "Connected";
-			$("#workoutServerStatus").css("background-image",'url("img/StatusLightGreen.png")').text("Connected");
+			if(sessionStorage.SERVERSTATUS != "Connected"){
+				console.log("Connected to Server");
+				sessionStorage.SERVERSTATUS = "Connected";
+				$("#workoutServerStatus").css("background-image",'url("img/StatusLightGreen.png")').text("Connected");
+				stopPingLoop();
+			}
 		} else if(status == "noresponse"){
-			console.log("Server Not Available");
-			sessionStorage.SERVERSTATUS = "Not Available";
-			$("#workoutServerStatus").css("background-image","url('img/StatusLightRed.png')").text("Not Available");
+			if(sessionStorage.SERVERSTATUS != "Not Available"){
+				console.log("Server Not Available");
+				sessionStorage.SERVERSTATUS = "Not Available";
+				$("#workoutServerStatus").css("background-image","url('img/StatusLightRed.png')").text("Not Available");
+			}
 		} else if(status == "error"){
-			console.log("No Connection to Database");
-			sessionStorage.SERVERSTATUS = "Error";
-			$("#workoutServerStatus").css("background-image","url('img/StatusLightAmber.png')").text("Error");
+			if(sessionStorage.SERVERSTATUS != "Error"){
+				console.log("No Connection to Database");
+				sessionStorage.SERVERSTATUS = "Error";
+				$("#workoutServerStatus").css("background-image","url('img/StatusLightAmber.png')").text("Error");
+			}
 		} else {
-			console.log("An Unknown Server Response Received");
-			sessionStorage.SERVERSTATUS = "Unknown";
-			$("#workoutServerStatus").css("background-image","url('img/StatusLightDarkGrey.png')").text("Unknown Response");
+			if(sessionStorage.SERVERSTATUS != "Unknown"){
+				console.log("An Unknown Server Response Received");
+				sessionStorage.SERVERSTATUS = "Unknown";
+				$("#workoutServerStatus").css("background-image","url('img/StatusLightDarkGrey.png')").text("Unknown Response");
+			}
 		}
 }
 
@@ -52,29 +62,6 @@ function loadJSON(path, callback) {
 		}
 	};
 	xobj.send(null);
-}
-
-//function to get config from config.properties. Test connection to server and set variables
-function getConfig(){
-	console.log("Getting Config");
-	loadJSON('config.properties',function(response){
-		globalConfig = JSON.parse(response);
-		console.log("Config");
-		console.log(" -> Ip: "+globalConfig.ip);
-		console.log(" -> Port: "+globalConfig.port);
-		ping("http://"+globalConfig.ip+":"+globalConfig.port,function(result){
-			if(result == "noresponse"){
-				console.log("External Server No Response");
-				sessionStorage.SERVERIP = globalConfig.ip;
-				sessionStorage.SERVERPORT = globalConfig.port;
-			} else {
-				sessionStorage.SERVERIP = globalConfig.ip;
-				sessionStorage.SERVERPORT = globalConfig.port;
-				console.log("Connecting via "+globalConfig.ip+":"+globalConfig.port);
-			}
-			getServerStatus(result);
-		});
-	});
 }
 
 //function for testing ping to server
@@ -96,6 +83,22 @@ function ping(url,callback){
 		error: function(){
 			callback("noresponse");
 		}
+	});
+}
+
+//function to get config from config.properties. Test connection to server and set variables
+function getConfig(){
+	console.log("Getting Config");
+	loadJSON('config.properties',function(response){
+		globalConfig = JSON.parse(response);
+		console.log("Config");
+		console.log(" -> Ip: "+globalConfig.ip);
+		console.log(" -> Port: "+globalConfig.port);
+		console.log("Starting Ping Loop");
+		sessionStorage.SERVERIP = globalConfig.ip;
+		sessionStorage.SERVERPORT = globalConfig.port;
+		sessionStorage.SERVERSTATUS = "Boot";
+		pingLoop();
 	});
 }
 
@@ -146,7 +149,7 @@ function accountLinkMouseOver(site){
 }
 
 function homeTitleMouseOver(){
-	$('#homeDetailsBackground').toggleClass('homeDetailsBackgroundSelected').toggleClass('homeDetailsBackground');
+	$('#homeDetails').toggleClass('homeDetailsBackgroundSelected').toggleClass('homeDetailsBackground');
 }
 
 function homeTitleClick(){
@@ -209,5 +212,28 @@ $(document).ready(function(){
 	$("#newWorkoutDate").datepicker({ dateFormat: 'yy-mm-dd'});
 	$('#loadingScreen').addClass('hidden');
 
-
 });
+
+function pingLoop() {
+	ping("http://"+globalConfig.ip+":"+globalConfig.port,function(result){
+		if(result == "noresponse"){
+			//console.log("External Server No Response, continuing Pin Loop");
+		} else {
+			//console.log("Connecting via "+globalConfig.ip+":"+globalConfig.port);
+		}
+		getServerStatus(result);
+	});
+}
+
+function stopPingLoop(){
+	console.log("Stopping Ping");
+	clearInterval(workingTimer);
+}
+
+function screenSize(){
+	if(window.width <= 760){
+		return "mobile";
+	} else {
+		return "desktop";
+	}
+}

@@ -1,5 +1,5 @@
 /*
--* DESKTOP
+-* MOBILE
 -* General CSS for index.html
 */
 
@@ -73,7 +73,7 @@ h1, p{
 */
 #MainSection {
 	overflow: hidden;
-	background-image: url(../img/Homeimage.JPG);
+	background-image: url(../img/AddButton.png);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: bottom center;
@@ -112,9 +112,7 @@ h1, p{
 	opacity: 1;
 }
 
-/*
--* Nav Section
-*/
+
 #NavSection {
 	background-color: #000000;
 	color: #F5F5F5;
